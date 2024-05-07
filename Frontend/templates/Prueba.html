@@ -1,0 +1,99 @@
+{% load static %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'IMG/UninovaICO.ico' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{% static 'css/login_pueba.css' %}"> 
+    <title>Login - Uninova</title>
+</head>
+<body>
+    <header>
+        <div class="logo"></div>
+        <nav>
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Sobre Nosotros</a></li>
+                <li><a href="#">Convenios</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <div class="container">
+        <div class="forms-container">
+            <div class="signin-signup">
+                <!-- Formulario de inicio de sesión -->
+                <form action="{% url 'iniciar_sesion' %}" method="post" class="sign-in-form">
+                    {% csrf_token %}
+                    <img src="{% static 'img/LOGOUNINOVA.png' %}" class="Logos">
+                        <h2 class="Title">Iniciar Sesión</h2>
+                        <h2 class="Welcome">¡ Bienvenido de nuevo a Uninova !</h2>
+                    {{ form.non_field_errors }}
+                    <div class="input-field">
+                        <i class='bx bxs-user'></i>
+                        {{ form.username }}
+                    </div>
+                    <div class="input-field">
+                        <i class='bx bxs-lock-alt'></i>
+                        {{ form.password }}
+                    </div>
+                    <input type="submit" value="Login" class="btn solid" />
+                </form>
+        
+                <!-- Formulario de registro -->
+                <form action="{% url 'registrarse' %}" method="post" class="sign-up-form">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div class="input-field">
+                        <i class='bx bxs-user'></i>
+                        {{ form.username }}
+                    </div>
+                    <div class="input-field">
+                        <i class='bx bxs-envelope'></i>
+                        {{ form.email }}
+                    </div>
+                    <div class="input-field">
+                        <i class='bx bxs-lock-alt'></i>
+                        {{ form.password1 }}
+                    </div>
+                    <div class="input-field">
+                        <i class='bx bxs-lock-alt'></i>
+                        {{ form.password2 }}
+                    </div>
+                    <input type="submit" value="Registrarse" class="btn" />
+                </form>
+            </div>
+        </div>
+        
+
+        <div class="panels-container">
+            <div class="panel left-panel">
+                <div class="content">
+                    <h3>¡Bienvenido a UNINOVA!</h3>
+                    <p>Únete y empieza a explorar el mundo del conocimiento con la comunidad de Uninova.
+                    </p>
+                    <button class="btn transparent" id="sign-up-btn">
+                        Registrate
+                    </button>
+                </div>
+                <img src="{% static 'IMG/Img Login/login2.svg' %}" class="image" alt="Imagen Login">
+            </div>
+            <div class="panel right-panel">
+                <div class="content">
+                    <h3>¿Ya Tienes Cuenta?</h3>
+                    <p>¡Inicia sesión para acceder a todos los recursos y funcionalidades de UNINOVA! </p>
+                    <button class="btn transparent" id="sign-in-btn">
+                        Iniciar Sesión
+                    </button>
+                </div>
+                <img src="{% static 'IMG/Img Login/register.svg' %}" class="image" alt="Imagen Register">
+            </div>
+        </div> 
+    </div>
+     
+    <script src="{% static 'js/Loginr.js' %}"></script>
+</body>
+</html>
