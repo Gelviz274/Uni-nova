@@ -1,5 +1,5 @@
 from django.db import models
-from Usuarios.models import UserN
+from Usuarios.models import UserProfile
 import os
 
 
@@ -13,8 +13,8 @@ def upload_to_actualizacion_media(instance, filename):
 
 class Proyecto(models.Model):
     nombre_proyecto = models.CharField(max_length=255)
-    creador = models.ForeignKey(UserN, on_delete=models.CASCADE, related_name='proyectos_creados')
-    colaboradores = models.ManyToManyField(UserN, related_name='proyectos_colaborados')
+    creador = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='proyectos_creados')
+    colaboradores = models.ManyToManyField(UserProfile, related_name='proyectos_colaborados')
     fecha_creacion = models.DateField(auto_now_add=True)
     descripcion = models.TextField()
     documentacion = models.FileField(upload_to=upload_to_proyecto_media, null=True, blank=True)

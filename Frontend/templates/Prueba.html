@@ -6,7 +6,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'IMG/UninovaICO.ico' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="{% static 'css/login_pueba.css' %}"> 
+    <link rel="stylesheet" href="{% static 'css/eba.css' %}"> 
     <title>Login - Uninova</title>
 </head>
 <body>
@@ -25,49 +25,39 @@
     <div class="container">
         <div class="forms-container">
             <div class="signin-signup">
-                <!-- Formulario de inicio de sesión -->
                 <form action="{% url 'iniciar_sesion' %}" method="post" class="sign-in-form">
                     {% csrf_token %}
-                    <img src="{% static 'img/LOGOUNINOVA.png' %}" class="Logos">
-                        <h2 class="Title">Iniciar Sesión</h2>
-                        <h2 class="Welcome">¡ Bienvenido de nuevo a Uninova !</h2>
-                    {{ form.non_field_errors }}
-                    <div class="input-field">
-                        <i class='bx bxs-user'></i>
-                        {{ form.username }}
-                    </div>
-                    <div class="input-field">
-                        <i class='bx bxs-lock-alt'></i>
-                        {{ form.password }}
-                    </div>
-                    <input type="submit" value="Login" class="btn solid" />
+                    {{ form.as_p }}
+                    <input type="submit" value="Iniciar sesión" class="btn solid" />
                 </form>
-        
-                <!-- Formulario de registro -->
+            
                 <form action="{% url 'registrarse' %}" method="post" class="sign-up-form">
                     {% csrf_token %}
-                    {{ form.non_field_errors }}
-                    <div class="input-field">
-                        <i class='bx bxs-user'></i>
-                        {{ form.username }}
-                    </div>
-                    <div class="input-field">
-                        <i class='bx bxs-envelope'></i>
-                        {{ form.email }}
-                    </div>
-                    <div class="input-field">
-                        <i class='bx bxs-lock-alt'></i>
-                        {{ form.password1 }}
-                    </div>
-                    <div class="input-field">
-                        <i class='bx bxs-lock-alt'></i>
-                        {{ form.password2 }}
-                    </div>
+                    {{ form.as_p }}
                     <input type="submit" value="Registrarse" class="btn" />
                 </form>
             </div>
         </div>
         
+        
+
+<div class="FROM">
+    <h2>Login</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+    <h2>Register</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Register</button>
+    </form>
+</div>
+
+
+
 
         <div class="panels-container">
             <div class="panel left-panel">
