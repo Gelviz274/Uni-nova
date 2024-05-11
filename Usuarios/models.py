@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, User
 from django.contrib.auth.models import BaseUserManager
 import os
 
@@ -10,10 +10,16 @@ def upload_to_usuario_media(instance, filename):
 
 class Universidad(models.Model):
     nombre = models.CharField(max_length=255)
+    
+    def __str__(self):
+        return self.nombre
 
 class Carrera(models.Model):
     nombre = models.CharField(max_length=255)
     universidad = models.ForeignKey(Universidad, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.nombre
 
 class Semestre(models.Model):
     nombre = models.CharField(max_length=100)
@@ -21,7 +27,8 @@ class Semestre(models.Model):
     def __str__(self):
         return self.nombre
 
-class UserN(AbstractUser):
+class UserProfile(models.Model):
+    user= models.OneToOneField(User, on_delete=models.CASCADE)
     semestre = models.ForeignKey(Semestre, on_delete=models.SET_NULL, null=True, blank=True)
     universidad = models.ForeignKey(Universidad, on_delete=models.SET_NULL, null=True, blank=True)
     carrera = models.ForeignKey(Carrera, on_delete=models.SET_NULL, null=True, blank=True)
@@ -32,7 +39,9 @@ class UserN(AbstractUser):
     groups = models.ManyToManyField('auth.Group')
     user_permissions = models.ManyToManyField('auth.Permission')
     def __str__(self):
-        return self.username
+        return self.user.first_name
+    
+
 
 
 
