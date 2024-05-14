@@ -5,7 +5,7 @@ import os
 
 def upload_to_usuario_media(instance, filename):
     """Función para definir la ruta de carga de las fotos de perfil de usuario."""
-    return os.path.join('Frontend', 'Media', 'imagenes', 'fotos_usuarios', filename)
+    return os.path.join('imagenes', 'fotos_usuarios', filename)
 
 
 class Universidad(models.Model):
@@ -19,7 +19,7 @@ class Carrera(models.Model):
     universidad = models.ForeignKey(Universidad, on_delete=models.CASCADE)
     
     def __str__(self):
-        return self.nombre
+        return f"{self.nombre} - {self.universidad}"
 
 class Semestre(models.Model):
     nombre = models.CharField(max_length=100)
@@ -36,15 +36,10 @@ class UserProfile(models.Model):
     acerca_de_mi = models.TextField(null=True, blank=True)
     telefono = models.CharField(max_length=20, null=True, blank=True)
     fecha_nacimiento = models.DateField(null=True, blank=True)
-    groups = models.ManyToManyField('auth.Group')
-    user_permissions = models.ManyToManyField('auth.Permission')
+
     def __str__(self):
         return self.user.first_name
     
-
-
-
-
 
 
 

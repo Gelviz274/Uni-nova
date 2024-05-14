@@ -1,10 +1,17 @@
 {% autoescape off %}
 
-Hi {{ user.first_name }},
+Hola {{ user.username }},
 
-Please click on below link to confirm your registration.
+¡Bienvenido a la comunidad de Uni-nova! Estamos emocionados de que te unas a nosotros.
+
+Haz clic en el enlace a continuación para confirmar tu registro.
 http://{{domain}}{% url 'activate' uidb64=uid token=token %}
+Este enlace te llevará a una página donde podrás confirmar tu dirección de correo electrónico y completar tu perfil.
 
-If you think it's not you, please ignore this email.
+Si no fuiste tú quien se registró, no te preocupes, simplemente ignora este correo electrónico. Tu dirección de correo electrónico no se agregará a ninguna lista de correo no deseado.
+
+¡Gracias por unirte a Uni-nova!
+
+El equipo de Uni-nova
 
 {% endautoescape %}
