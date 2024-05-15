@@ -112,10 +112,12 @@ def cerrar_sesion(request):
 def Admin_Inicio (request):
     return render(request, 'inicio_admin.html')
 
-@login_required(login_url = 'iniciar_sesion')
+@login_required(login_url='iniciar_sesion')
 def Inicio(request):
     # Obtener todos los proyectos de la base de datos
     proyectos = Proyecto.objects.all()
-    return render(request, 'inicio.html', {'proyectos': proyectos})
+    # Obtener el perfil del usuario actual
+    user_profile = UserProfile.objects.get(user=request.user)
+    return render(request, 'inicio.html', {'proyectos': proyectos, 'user_profile': user_profile})
 def Prueba (request):
     return render(request, 'Prueba.html')
