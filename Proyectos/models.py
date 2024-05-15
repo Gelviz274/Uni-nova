@@ -6,11 +6,11 @@ import os
 
 def upload_to_proyecto_media(instance, filename):
     """Función para definir la ruta de carga de archivos multimedia de proyectos."""
-    return os.path.join('Frontend', 'Media', 'videos', 'Videos_proyectos', filename)
-
+    return os.path.join('videos', 'Videos_proyectos', filename)
+#SUBIR VIDEOS
 def upload_to_actualizacion_media(instance, filename):
     """Función para definir la ruta de carga de archivos multimedia de actualizaciones."""
-    return os.path.join('Frontend', 'Media', 'videos', 'Videos_actualizacion', filename)
+    return os.path.join('videos', 'Videos_actualizacion', filename)
 
 class Proyecto(models.Model):
     nombre_proyecto = models.CharField(max_length=255)

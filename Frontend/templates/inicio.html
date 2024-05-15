@@ -13,28 +13,25 @@
 
     <div class="sidebar">
         <div class="usuario-info">
-            <!-- Imprime la URL de la imagen -->
-            <p>URL de la imagen: {{ request.user.perfil.foto_perfil.url }}</p>
-            <!-- En tu plantilla -->
-            <div>URL de la imagen: {{ request.user.perfil.foto_perfil.url }}</div>
-
+            
             <p>{{ request.user.username }}</p>
         </div>
         <!-- Resto de tu código -->
     </div>
     
     <div class="sidebar">
-        <div class="usuario-info">
-            <!-- Verifica si hay una imagen de perfil -->
-            {% if request.user.perfil.foto_perfil %}
-                <img src="{{ request.user.perfil.foto_perfil.url }}" alt="Foto de perfil">
-            {% else %}
-                <!-- Si no hay imagen de perfil, muestra una imagen por defecto -->
-                <img src="{% static 'img/default_profile_pic.jpg' %}" alt="Foto de perfil por defecto">
-            {% endif %}
-            <p>{{ request.user.username }}</p>
-        </div>
+        {% if user_profile.foto_perfil %}
+    <img src="{{ user_profile.foto_perfil.url }}" alt="Foto de perfil" width="400">
+        {% else %}
+    <p>No hay foto de perfil disponible</p>
+        {% endif %}
+
+        </div >
         <ul>
+            {% if user.is_superuser %}
+                <a href="{% url 'admin:index' %}">Ir al panel de administración</a>
+            {% endif %}
+
             <li><a href="{% url 'inicio' %}">Inicio</a></li>
             <li><a href="#">Buscar</a></li>
             <li><a href="#">Guardados</a></li>
@@ -42,20 +39,36 @@
     </div>
     
 
-    <h1>Proyectos</h1>
     {% for proyecto in proyectos %}
-        <div class="publicacion">
-            <h2>{{ proyecto.nombre_proyecto }}</h2>
-            <p>Creado por: {{ proyecto.creador.username }}</p>
-            <p>{{ proyecto.descripcion }}</p>
-            {% if proyecto.imagenes %}
-                <img src="{{ proyecto.imagenes.url }}" alt="Imagen del proyecto" width="200">
-            {% endif %}
-            <!-- Aquí puedes agregar más detalles del proyecto si lo deseas -->
-        </div>
-    {% empty %}
-        <p>No hay proyectos disponibles en este momento.</p>
-    {% endfor %}
+    <div class="publicacion">
+        <h2>{{ proyecto.nombre_proyecto }}</h2>
+        <p>Creado por: {{ proyecto.creador.username }}</p>
+        <p>Fecha de Creación: {{ proyecto.fecha_creacion }}</p>
+        <p>{{ proyecto.descripcion }}</p>
+        
+        {% if proyecto.imagenes %}
+            <img src="{{ proyecto.imagenes.url }}" alt="Imagen del proyecto" width="200">
+        {% endif %}
+        
+        {% if proyecto.videos %}
+            <h3>Videos:</h3>
+            <video width="320" height="240" controls>
+                <source src="{{ proyecto.videos.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        {% endif %}
+        
+        {% if proyecto.documentacion %}
+            <h3>Documentación:</h3>
+            <a href="{{ proyecto.documentacion.url }}">{{ proyecto.documentacion.name }}</a>
+        {% endif %}
+        
+        <!-- Aquí puedes agregar más detalles del proyecto si lo deseas -->
+    </div>
+{% empty %}
+    <p>No hay proyectos disponibles en este momento.</p>
+{% endfor %}
+
 
     <a href="{% url 'cerrar_sesion' %}">
         <button type="submit">Cerrar sesión</button>
