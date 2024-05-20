@@ -4,29 +4,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'IMG/Uninova.ico' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/inicio.css' %}">
+    <title>Uni-nova</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'CSS/inicio.css' %}">
 </head>
 <body>
 
 
     <div class="sidebar">
         <div class="usuario-info">
-            
             <p>{{ request.user.username }}</p>
         </div>
         <!-- Resto de tu código -->
-    </div>
-    
-    <div class="sidebar">
-        {% if user_profile.foto_perfil %}
-    <img src="{{ user_profile.foto_perfil.url }}" alt="Foto de perfil" width="400">
-        {% else %}
-    <p>No hay foto de perfil disponible</p>
-        {% endif %}
-
-        </div >
+        <div class="imagen">
+            {% if user_profile.foto_perfil %}
+                <img src="{{ user_profile.foto_perfil.url }}" alt="Foto de perfil">
+            {% else %}
+                <img src="{% static 'IMG/Defaultuser.png' %}">
+            {% endif %}
+        </div>
+        
         <ul>
             {% if user.is_superuser %}
                 <a href="{% url 'admin:index' %}">Ir al panel de administración</a>
@@ -38,29 +36,28 @@
         </ul>
     </div>
     
-
+<div class="ContenedorPro">
     {% for proyecto in proyectos %}
     <div class="publicacion">
         <h2>{{ proyecto.nombre_proyecto }}</h2>
-        <p>Creado por: {{ proyecto.creador.username }}</p>
+        <p>{{ proyecto.creador.username }}</p>
         <p>Fecha de Creación: {{ proyecto.fecha_creacion }}</p>
         <p>{{ proyecto.descripcion }}</p>
         
         {% if proyecto.imagenes %}
-            <img src="{{ proyecto.imagenes.url }}" alt="Imagen del proyecto" width="200">
+            <img src="{{ proyecto.imagenes.url }}" alt="Imagen del proyecto">
         {% endif %}
         
         {% if proyecto.videos %}
             <h3>Videos:</h3>
-            <video width="320" height="240" controls>
+            <video width="320" height="220" controls>
                 <source src="{{ proyecto.videos.url }}" type="video/mp4">
-                Your browser does not support the video tag.
+                El video no se puede reproducir.
             </video>
         {% endif %}
         
         {% if proyecto.documentacion %}
-            <h3>Documentación:</h3>
-            <a href="{{ proyecto.documentacion.url }}">{{ proyecto.documentacion.name }}</a>
+            <h3><a href="{{ proyecto.documentacion.url }}">Documentación</a></h3>
         {% endif %}
         
         <!-- Aquí puedes agregar más detalles del proyecto si lo deseas -->
@@ -69,7 +66,7 @@
     <p>No hay proyectos disponibles en este momento.</p>
 {% endfor %}
 
-
+</div>
     <a href="{% url 'cerrar_sesion' %}">
         <button type="submit">Cerrar sesión</button>
     </a>
