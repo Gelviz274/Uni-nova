@@ -39,9 +39,6 @@ class ActualizacionProyecto(models.Model):
 class ProyectoColaborador(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE)
-    # Puedes agregar campos adicionales aquí si lo necesitas
-    # Por ejemplo, el rol del colaborador en el proyecto
-    # rol = models.CharField(max_length=100)
 
     def __str__(self):
         return f'{self.usuario.username} colabora en {self.proyecto.nombre_proyecto}'
