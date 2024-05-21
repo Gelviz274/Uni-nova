@@ -1,74 +1,93 @@
-{% load static %} 
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'IMG/Uninova.ico' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Uni-nova</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.6.3/css/foundation.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'CSS/inicio.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
+
 <body>
 
-
-    <div class="sidebar">
-        <div class="usuario-info">
-            <p>{{ request.user.username }}</p>
+    <div class="grid-x">
+        <div class="cell medium-1 large-2 sidebar">
+            <a href="{% url 'inicio' %}" class="logo">
+                <img src="{% static 'IMG/LOGOUNINOVA.png' %}" alt="Logo"class="logo">
+            </a>
+            <ul class="menu">
+                
+                <li><a href="{% url 'inicio' %}"><i class='bx bxs-home' ></i>Inicio</a></li>
+                
+                <li><a href="#"><i class='bx bx-search'></i> Buscar</a></li>
+                <li><a href="#"><i class='bx bx-bookmark'></i>Guardados</a></li>
+                
+                <li><a href="#"><i class='bx bxs-user'></i>Ver perfil</a></li>
+                
+                <li><a href="#"><i class='bx bx-cog' ></i>Ajustes</a></li>
+                <li><a href="#"><i class='bx bx-upload' ></i>Nueva Publicación</a></li>
+                <div class="usuario">
+                    <div class="imagen_user">
+                        {% if user_profile.foto_perfil %}
+                        <img src="{{ user_profile.foto_perfil.url }}" alt="Foto de perfil">
+                        {% else %}
+                        <img src="{% static 'IMG/Defaultuser.png' %}">
+                        {% endif %}
+                    </div>
+                    <div class="usuario-info">
+                        <p>{{ request.user.username }}</p>
+                    </div>
+                </div>
+            </ul>
+            
+            <div class="cerrarsesion">
+                
+                <a href="{% url 'cerrar_sesion' %}" class="butto"><i class='bx bx-log-out' ></i>Cerrar sesión</a>
+            </div>
         </div>
-        <!-- Resto de tu código -->
-        <div class="imagen">
-            {% if user_profile.foto_perfil %}
-                <img src="{{ user_profile.foto_perfil.url }}" alt="Foto de perfil">
+
+        <div class="cell small-6 medium-2 large-9 ContenedorPro">
+            <h1>Proyectos</h1>
+            {% if proyectos %}
+            {% for proyecto in proyectos %}
+            <div class="publicacion">
+                <h2>{{ proyecto.nombre_proyecto }}</h2>
+                <b><p>{{ proyecto.creador.username }}</p></b>
+                <p>Fecha de Creación: {{ proyecto.fecha_creacion }}</p>
+                <p>{{ proyecto.descripcion }}</p>
+                <div class="media">
+                {% if proyecto.imagenes %}
+                <img src="{{ proyecto.imagenes.url }}" alt="Imagen del proyecto">
+                {% endif %}
+
+                {% if proyecto.videos %}
+                
+                <video  controls>
+                    <source src="{{ proyecto.videos.url }}" type="video/mp4">
+                    El video no se puede reproducir.
+                </video>
+                {% endif %}
+            </div>
+                {% if proyecto.documentacion %}
+                <h3><a href="{{ proyecto.documentacion.url }}">Documentación</a></h3>
+                {% endif %}
+            </div>
+            {% endfor %}
             {% else %}
-                <img src="{% static 'IMG/Defaultuser.png' %}">
+            <div class="no-proyectos">
+                <p>No hay proyectos disponibles en este momento.</p>
+            </div>
             {% endif %}
         </div>
-        
-        <ul>
-            {% if user.is_superuser %}
-                <a href="{% url 'admin:index' %}">Ir al panel de administración</a>
-            {% endif %}
-
-            <li><a href="{% url 'inicio' %}">Inicio</a></li>
-            <li><a href="#">Buscar</a></li>
-            <li><a href="#">Guardados</a></li>
-        </ul>
     </div>
+
     
-<div class="ContenedorPro">
-    {% for proyecto in proyectos %}
-    <div class="publicacion">
-        <h2>{{ proyecto.nombre_proyecto }}</h2>
-        <p>{{ proyecto.creador.username }}</p>
-        <p>Fecha de Creación: {{ proyecto.fecha_creacion }}</p>
-        <p>{{ proyecto.descripcion }}</p>
-        
-        {% if proyecto.imagenes %}
-            <img src="{{ proyecto.imagenes.url }}" alt="Imagen del proyecto">
-        {% endif %}
-        
-        {% if proyecto.videos %}
-            <h3>Videos:</h3>
-            <video width="320" height="220" controls>
-                <source src="{{ proyecto.videos.url }}" type="video/mp4">
-                El video no se puede reproducir.
-            </video>
-        {% endif %}
-        
-        {% if proyecto.documentacion %}
-            <h3><a href="{{ proyecto.documentacion.url }}">Documentación</a></h3>
-        {% endif %}
-        
-        <!-- Aquí puedes agregar más detalles del proyecto si lo deseas -->
-    </div>
-{% empty %}
-    <p>No hay proyectos disponibles en este momento.</p>
-{% endfor %}
 
-</div>
-    <a href="{% url 'cerrar_sesion' %}">
-        <button type="submit">Cerrar sesión</button>
-    </a>
 </body>
+
 </html>
