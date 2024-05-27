@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 from django.db import IntegrityError
@@ -7,6 +7,7 @@ from django.contrib import messages, auth
 # Create your views here.
 from Usuarios.models import UserProfile
 from Proyectos.models import Proyecto
+from django.urls import reverse
 # Verification email
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -119,5 +120,52 @@ def Inicio(request):
     # Obtener el perfil del usuario actual
     user_profile = UserProfile.objects.get(user=request.user)
     return render(request, 'inicio.html', {'proyectos': proyectos, 'user_profile': user_profile})
+
+
+@login_required(login_url='iniciar_sesion')
+def Prueba(request):
+    # Obtener todos los proyectos de la base de datos
+    proyectos = Proyecto.objects.all()
+    # Obtener el perfil del usuario actual
+    user_profile = UserProfile.objects.get(user=request.user)
+    return render(request, 'Menu.html', {'proyectos': proyectos, 'user_profile': user_profile})
+"""def Prueba (request):
+    return render(request, 'Prueba.html')"""
+
+
+@login_required
+def perfil_usuario(request, username): 
+    user = get_object_or_404(User, username=username)
+    user_profile = get_object_or_404(UserProfile, user=user)
+    proyectos_creados = Proyecto.objects.filter(creador=user)
+    proyectos_colaborados = user.proyectos_colaborados.all()
+    universidad_usuario = user_profile.universidad
+    
+    return render(request, 'perfil_user.html', {
+        'user': user,
+        'universidad_usuario': universidad_usuario,
+        'proyectos_creados': proyectos_creados,
+        'proyectos_colaborados': proyectos_colaborados,
+        'user_profile': user_profile
+    })
+
+
+
+@login_required
+def edit_user(request):
+    if request.method == 'POST':
+        user = request.user
+        user.username = request.POST.get('username')
+        user.first_name = request.POST.get('nombre')
+        user.last_name = request.POST.get('apellido')
+        user.save()
+        
+        # Genera la nueva URL del perfil
+        perfil_url = reverse('ver_perfil', kwargs={'username': user.username})
+        
+        # Devuelve la nueva URL en la respuesta JSON
+        return JsonResponse({'success': True, 'message': 'Cambios guardados exitosamente.', 'url': perfil_url})
+    else:
+        return JsonResponse({'success': False, 'message': 'Método no permitido.'}, status=405)
 def Prueba (request):
     return render(request, 'Prueba.html')
