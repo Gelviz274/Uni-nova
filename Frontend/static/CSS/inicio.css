@@ -3,61 +3,45 @@ body{
     background-color: #FFEBCA;
     font-family: "Poppins", sans-serif;
 }
+
+
+.LOGO img{
+    width: 150px;
+    height: 150px;
+
+}
 /* Estilos para el menú */
 .sidebar {
-    position: fixed; /* Para que el menú quede fijo */
-    top: 0; /* Fijar el menú en la parte superior */
-    bottom: 0; /* Fijar el menú en la parte inferior */
-    left: 0; /* Fijar el menú en la parte izquierda */
-    overflow-y: auto; /* Permitir desplazamiento vertical si el contenido es más largo que la altura del menú */
-    background-color: #664a2b; /* Color de fondo del menú */
-    padding: 20px; /* Espaciado interior del menú */
-     /* Color de texto del menú */
+    background-color: #DEB685 !important;
+    min-height: 100vh;
+    padding-top: 20px;
 }
-.logo img{
-    width: 100px;
-    height: 100px;
+.nav-link {
+    color: #fff;
 }
-.menu {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    display: block;
-    position: relative;
+.nav-link:hover {
+    background-color: #c49e60;
+    color: #fff;
 }
-
-.menu li {
-    margin-bottom: 10px;
+.nav-link i {
+    margin-right: 10px;
 }
-
-.menu a {
-     color: #ccc;/* Color de texto para los enlaces del menú */
-    text-decoration: none;
-    display: block;
-    font-size: 1.2rem;
-}
-.menu a i {
-    margin-right: 8px; /* Espacio entre el icono y el texto */
-}
-
-.menu a:hover {
-    border-radius: 20px;
-    background-color: #636161;
-}
-
-
-i{
+.usuario {
     text-align: center;
-    line-height: 55px;
-    color: #a7a7a7;
-    font-size: 1.1rem;
-    transition: .5s; 
- }
-
-
-
-/* Estilos para la foto de perfil */
-
+    margin-top: 20px;
+}
+.usuario-info p {
+    margin: 0;
+    color: #fff;
+}
+.cerrarsesion .btn {
+    color: #fff;
+    background-color: #ff4b5c;
+    border: none;
+}
+.cerrarsesion .btn:hover {
+    background-color: #ff1e2d;
+}
 
 /* Estilos para las publicaciones */
 .publicacion {
@@ -65,7 +49,7 @@ i{
     border: 1px solid #202020; /* Borde gris de 1px */
     border-radius: 10px;
     margin-bottom: 20px;
-    margin-left: 500px;
+    margin-left: 100px;
     margin-top: 20px;
     padding: 20px;
 }
@@ -128,4 +112,40 @@ i{
 .butto i{
     margin-right: 8px; /* Espacio entre el icono y el texto */
     color: #202020;
+}
+
+/* Estilos para el modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* Estilos para el botón de cerrar */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }

@@ -22,3 +22,4 @@ class UniversidadAdmin(admin.ModelAdmin):
 admin.site.register(Universidad, UniversidadAdmin)
 admin.site.register(Semestre)
 admin.site.register(UserProfile)
+admin.site.register(Carrera)

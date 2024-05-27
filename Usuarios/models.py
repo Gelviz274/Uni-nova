@@ -20,6 +20,8 @@ class Carrera(models.Model):
     
     def __str__(self):
         return f"{self.nombre} - {self.universidad}"
+    def nombre_solo(self):
+        return self.nombre
 
 class Semestre(models.Model):
     nombre = models.CharField(max_length=100)
@@ -36,8 +38,11 @@ class UserProfile(models.Model):
     acerca_de_mi = models.TextField(null=True, blank=True)
     telefono = models.CharField(max_length=20, null=True, blank=True)
     fecha_nacimiento = models.DateField(null=True, blank=True)
+    mostrar_fecha_nacimiento = models.BooleanField(default=True)
 
     def __str__(self):
+        return f"{self.user.first_name} {self.user.last_name} - {self.user.username}"
+    def nombre_solo(self):
         return self.user.first_name
     
 
