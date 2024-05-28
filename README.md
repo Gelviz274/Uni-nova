@@ -1,5 +1,5 @@
-# Uninova
-![image](https://github.com/Gelviz274/Uni-nova/assets/148910408/f2034100-435f-435a-a779-74639ec6a196)
+# 👨‍🎓 Uninova 👩‍🎓
+<img src="https://github.com/Gelviz274/Uni-nova/assets/148910408/f2034100-435f-435a-a779-74639ec6a196" alt="Uninova" width="400">
 
 ¡Bienvenido a Uninova! Esta es una plataforma web diseñada para facilitar la colaboración y la gestión de proyectos entre usuarios. Con Uninova, puedes crear, seguir y colaborar en proyectos de manera eficiente, todo desde una interfaz intuitiva y fácil de usar.
 
