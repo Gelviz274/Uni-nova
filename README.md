@@ -87,10 +87,6 @@ Uninova es desarrollado por un equipo de desarrolladores apasionados:
 4. Sube tus cambios a tu repositorio (`git push origin feature/nueva-funcion`).
 5. Abre una solicitud de extracción en GitHub.
 
-## Licencia
-
-Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
-
 ---
 
 ¡Gracias por tu interés en Uninova! Esperamos que disfrutes utilizando nuestra plataforma para colaborar en proyectos y conectar con otros usuarios. Si tienes alguna pregunta o sugerencia, no dudes en contactarnos.
