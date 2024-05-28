@@ -46,7 +46,7 @@ class UserProfile(models.Model):
         return self.user.first_name
     
 
-
+    
 
 class UserManager(BaseUserManager):
 

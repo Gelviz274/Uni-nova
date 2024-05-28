@@ -11,58 +11,34 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href="{% static 'CSS/inicio.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css" rel="stylesheet">  
 </head>
 
 <body>
-
-    <div class="container-fluid">
-        <div class="row">
-            <nav class="col-md-2 d-none d-md-block sidebar">
-                <div class="sidebar-sticky">
+    <div class="animated-background"></div>
+    
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-2">
                     <a href="{% url 'inicio' %}" class="logo">
                         <div class="LOGO">
                             <img src="{% static 'IMG/LOGOUNINOVA.png' %}" alt="Logo" class="logo img-flid mb-4" id="Logo">
                         </div>
-
                     </a>
-                    <ul class="nav flex-column" id="nav_accordion">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'inicio' %}">
-                                <i class='bx bxs-home'></i>
-                                Inicio
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class='bx bx-search'></i>
-                                Buscar
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class='bx bx-bookmark'></i>
-                                Guardados
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'ver_perfil' request.user.username %}">
-                                <i class='bx bxs-user'></i>
-                                Ver perfil
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class='bx bx-cog'></i>
-                                Ajustes
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class='bx bx-upload'></i>
-                                Nueva Publicación
-                            </a>
-                        </li>
-                    </ul>
+                </div>
+                <div class="col-md-8">
+                    <!-- Barra de búsqueda -->
+                    <form class="form-inline">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
+                        <button class="btn btn-buscar" type="submit">
+                            <i class="bx bx-search"></i> <!-- Icono de lupa -->
+                        </button>
+                        
+                    </form>
+                </div>
+                <div class="col-md-2 text-right">
+                    <!-- Foto de perfil -->
                     <div class="usuario mt-4">
                         <div class="imagen_user">
                             {% if user_profile.foto_perfil %}
@@ -70,58 +46,97 @@
                             {% else %}
                             <img src="{% static 'IMG/Defaultuser.png' %}" class="img-fluid rounded-circle">
                             {% endif %}
+                            
+                            <!-- Menú desplegable -->
+                            <div class="menu-desplegable" id="menuDesplegable">
+                                <a href="{% url 'ver_perfil' request.user.username %}">Ver perfil</a>
+                                <a href="{% url 'cerrar_sesion' %}">Cerrar sesión</a>
+                            </div>
+                            <i class="bi bi-nut"></i>
+                            <i class="bi bi-bell"></i>
                         </div>
-                        <div class="usuario-info">
-                            <p>{{ request.user.username }}</p>
                         </div>
-                    </div>
-                    <div class="cerrarsesion mt-4">
-                        <a href="{% url 'cerrar_sesion' %}" class="btn btn-block">
-                            <i class='bx bx-log-out'></i>
-                            Cerrar sesión
-                        </a>
+                       
                     </div>
                 </div>
-            </nav>
+            </div>
+        </div>
+    </header>
 
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-                <h1 class="h2">Proyectos</h1>
-                {% if proyectos %}
-                {% for proyecto in proyectos %}
-                <div class="publicacion card mb-4">
-                    <div class="card-body">
-                        <h2 class="card-title">{{ proyecto.nombre_proyecto }}</h2>
-                        <b><p class="card-text">{{ proyecto.creador.username }}</p></b>
-                        <p class="card-text">Fecha de Creación: {{ proyecto.fecha_creacion }}</p>
-                        <p class="card-text">{{ proyecto.descripcion }}</p>
-                        <div class="media">
-                            {% if proyecto.imagenes %}
-                            <img src="{{ proyecto.imagenes.url }}" alt="Imagen del proyecto" class="img-fluid">
-                            {% endif %}
-                            {% if proyecto.videos %}
-                            <video controls class="mt-3 w-100">
-                                <source src="{{ proyecto.videos.url }}" type="video/mp4">
-                                El video no se puede reproducir.
-                            </video>
+  
+  
+  
+  
+    <!-- Contenido -->
+    <div class="container-fluid" style="margin-top: 70px;"> <!-- Agregué un margen superior de 70px -->
+        <div class="row">
+            <!-- Sección izquierda -->
+            <div class="col-md-3">
+                <div class="left-section">
+                    <h1>Bienvenido a mi sitio web</h1>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor, magna vel congue egestas, orci nisi rhoncus nisi, quis fringilla nisi velit vel sapien. Sed bibendum, velit vel pharetra aliquam, nunc nunc tempor nunc, vel aliquet nisi nisi eu nunc.</p>
+  <button>Más información</button>
+                    <!-- Contenido de la sección izquierda -->
+                </div>
+            </div>
+
+            <!-- Sección central -->
+            <main role="main" class="col-md-6">
+                <div class="main-section">
+                    <h1 class="h2 text-center">Proyectos</h1>
+                    {% if proyectos %}
+                    {% for proyecto in proyectos %}
+                    <div class="publicacion card mb-6">
+                        <div class="card-body">
+                            <h2 class="card-title">{{ proyecto.nombre_proyecto }}</h2>
+                            <b><p class="card-text">{{ proyecto.creador.username }}</p></b>
+                            <p class="card-text">Fecha de Creación: {{ proyecto.fecha_creacion }}</p>
+                            <p class="card-text">{{ proyecto.descripcion }}</p>
+                            <div class="media">
+                                {% if proyecto.imagenes %}
+                                <img src="{{ proyecto.imagenes.url }}" alt="Imagen del proyecto" class="img-fluid">
+                                {% endif %}
+                                {% if proyecto.videos %}
+                                <video controls class="mt-3 w-100">
+                                    <source src="{{ proyecto.videos.url }}" type="video/mp4">
+                                    El video no se puede reproducir.
+                                </video>
+                                {% endif %}
+                            </div>
+                            {% if proyecto.documentacion %}
+                            <h3 class="mt-3"><a href="{{ proyecto.documentacion.url }}">Documentación</a></h3>
                             {% endif %}
                         </div>
-                        {% if proyecto.documentacion %}
-                        <h3 class="mt-3"><a href="{{ proyecto.documentacion.url }}">Documentación</a></h3>
-                        {% endif %}
                     </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="no-proyectos">
+                        <p class="text-center">No hay proyectos disponibles en este momento.</p>
+                    </div>
+                    {% endif %}
                 </div>
-                {% endfor %}
-                {% else %}
-                <div class="no-proyectos">
-                    <p>No hay proyectos disponibles en este momento.</p>
-                </div>
-                {% endif %}
             </main>
+
+          <!-- Sección derecha -->
+<div class="col-md-3">
+    <div class="right-section border p-3 bg-white mb-4">
+        <h3>Sección Derecha</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris.</p>
+
+        <!-- Nuevo contenedor dentro del contenedor derecho -->
+        <div class="new-container border p-3 bg-white mb-4">
+            <h4>Nuevo Contenedor</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris.</p>
         </div>
     </div>
+</div>
+
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/menu_desplegable.js' %}"></script>
+
 </body>
+
 </html>
