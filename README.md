@@ -1,4 +1,5 @@
-# Uninova
+# 👨‍🎓 Uninova 👩‍🎓
+<img src="https://github.com/Gelviz274/Uni-nova/assets/148910408/f2034100-435f-435a-a779-74639ec6a196" alt="Uninova" width="400">
 
 ¡Bienvenido a Uninova! Esta es una plataforma web diseñada para facilitar la colaboración y la gestión de proyectos entre usuarios. Con Uninova, puedes crear, seguir y colaborar en proyectos de manera eficiente, todo desde una interfaz intuitiva y fácil de usar.
 
@@ -51,6 +52,10 @@ Sigue estos pasos para configurar y ejecutar el proyecto localmente:
 3. **Configurar la Base de Datos**:
     - Crea una base de datos PostgreSQL.
     - Actualiza la configuración de la base de datos en el archivo settings.py.
+    - Alistar las migraciones de Django:
+      ```sh
+      python manage.py makemigrations
+      ```
     - Ejecuta las migraciones de Django:
       ```sh
       python manage.py migrate
@@ -68,9 +73,9 @@ Sigue estos pasos para configurar y ejecutar el proyecto localmente:
 
 Uninova es desarrollado por un equipo de desarrolladores apasionados:
 
-- **Juan Pérez** - Desarrollador Backend
-- **María Gómez** - Desarrolladora Frontend
-- **Alejandro Martínez** - Administrador de Base de Datos
+- **Juan David Gelviz** - Desarrollador Backend y Administrador de Base de datos
+- **William Felipe Rodriguez** - Desarrollador Frontend
+- **Breyner Alexis Orjuela** - Diseñador Web
 
 ## Contribuciones
 
