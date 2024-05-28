@@ -52,6 +52,10 @@ Sigue estos pasos para configurar y ejecutar el proyecto localmente:
 3. **Configurar la Base de Datos**:
     - Crea una base de datos PostgreSQL.
     - Actualiza la configuración de la base de datos en el archivo settings.py.
+    - Alistar las migraciones de Django:
+      ```sh
+      python manage.py makemigrations
+      ```
     - Ejecuta las migraciones de Django:
       ```sh
       python manage.py migrate
