@@ -68,9 +68,9 @@ Sigue estos pasos para configurar y ejecutar el proyecto localmente:
 
 Uninova es desarrollado por un equipo de desarrolladores apasionados:
 
-- **Juan Pérez** - Desarrollador Backend
-- **María Gómez** - Desarrolladora Frontend
-- **Alejandro Martínez** - Administrador de Base de Datos
+- **Juan David Gelviz** - Desarrollador Backend y Administrador de Base de datos
+- **William Felipe Rodriguez** - Desarrollador Frontend
+- **Breyner Alexis Orjuela** - Diseñador Web
 
 ## Contribuciones
 
