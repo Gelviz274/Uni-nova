@@ -113,15 +113,28 @@ def cerrar_sesion(request):
 def Admin_Inicio (request):
     return render(request, 'inicio_admin.html')
 
+
 @login_required(login_url='iniciar_sesion')
 def Inicio(request):
     # Obtener todos los proyectos de la base de datos
     proyectos = Proyecto.objects.all()
+    
     # Obtener el perfil del usuario actual
-    user_profile = UserProfile.objects.get(user=request.user)
-    return render(request, 'inicio.html', {'proyectos': proyectos, 'user_profile': user_profile})
+    user_profile = get_object_or_404(UserProfile, user=request.user)
 
+    # Lista para almacenar los perfiles de los creadores de proyectos
+    perfiles_creadores = []
 
+    # Obtener los perfiles de los creadores de proyectos
+    for proyecto in proyectos:
+        try:
+            perfil_creador = UserProfile.objects.get(user=proyecto.creador)
+            perfiles_creadores.append(perfil_creador)
+        except UserProfile.DoesNotExist:
+            # Si el perfil de usuario no existe para el creador de este proyecto, agregar None a la lista
+            perfiles_creadores.append(None)
+    
+    return render(request, 'inicio.html', {'proyectos': proyectos, 'user_profile': user_profile, 'perfiles_creadores': perfiles_creadores})
 @login_required(login_url='iniciar_sesion')
 def Prueba(request):
     # Obtener todos los proyectos de la base de datos
@@ -167,5 +180,35 @@ def edit_user(request):
         return JsonResponse({'success': True, 'message': 'Cambios guardados exitosamente.', 'url': perfil_url})
     else:
         return JsonResponse({'success': False, 'message': 'Método no permitido.'}, status=405)
+    
+
+def crear_proyecto(request):
+    if request.method == 'POST':
+        # Obtener los datos del formulario del request
+        nombre_proyecto = request.POST.get('nombre_proyecto')
+        descripcion = request.POST.get('descripcion')
+        documentacion = request.FILES.get('documentacion')
+        videos = request.FILES.get('videos')
+        imagenes = request.FILES.get('imagenes')
+
+        # Crear el nuevo proyecto en la base de datos
+        proyecto = Proyecto.objects.create(
+            nombre_proyecto=nombre_proyecto,
+            creador=request.user,
+            descripcion=descripcion,
+            documentacion=documentacion,
+            videos=videos,
+            imagenes=imagenes
+        )
+
+        # Redirigir a la página del proyecto creado
+        return redirect('ver_proyecto', proyecto_id=proyecto.id)
+    
+    return render(request, 'inicio.html')
+
+def ver_proyecto(request, proyecto_id):
+    proyecto = get_object_or_404(Proyecto, id=proyecto_id)
+    return render(request, 'ver_proyecto.html', {'proyecto': proyecto})
+
 def Prueba (request):
     return render(request, 'Prueba.html')
