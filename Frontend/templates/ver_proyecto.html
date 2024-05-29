@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Proyecto</title>
+</head>
+<body>
+    <h1>{{ proyecto.nombre_proyecto }}</h1>
+    <p>Creador: {{ proyecto.creador }}</p>
+    <p>Fecha de Creación: {{ proyecto.fecha_creacion }}</p>
+    <p>Descripción: {{ proyecto.descripcion }}</p>
+
+    {% if proyecto.documentacion %}
+    <h3 class="mt-3"><a href="{{ proyecto.documentacion.url }}">Documentación</a></h3>
+    {% endif %}
+
+    {% if proyecto.videos %}
+    
+    <video controls class="mt-3 w-50">
+        <source src="{{ proyecto.videos.url }}" type="video/mp4">
+        El video no se puede reproducir.
+    </video>
+    {% endif %}
+    {% if proyecto.imagenes %}
+    <img src="{{ proyecto.imagenes.url }}" alt="Imagen del proyecto" class="img-fluid">
+{% endif %}
+
+    <a href="">Editar Proyecto</a>
+</body>
+</html>
