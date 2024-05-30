@@ -82,16 +82,16 @@
                 <div class="row d-flex align-items-start">
                     <!-- Sección izquierda -->
                     <div class="col-md-3">
-                        <div class="left-section bg-light p-4 rounded">
+                        <div class="left-section p-4 rounded">
                             <h1 class="h4 text-center">Bienvenido a Uni-nova</h1>
                             <p>¡Bienvenidos a Uninova! Aquí encontrarás una plataforma innovadora diseñada para conectar estudiantes y profesionales, 
                                 facilitando el intercambio de conocimientos y la colaboración en proyectos. Explora, aprende y colabora en un entorno amigable y enriquecedor. 
-                                ¡Nos alegra tenerte con nosotros!</p>
+                                <b>¡Nos alegra tenerte con nosotros!</b></p>
                             <div class="nav flex-column">
                                 <a href="#" class="nav-link active"><i class='bx bx-home' ></i> Inicio</a>
-                                <a href="#" class="nav-link"><i class='bx bx-book-bookmark' ></i> Universidades</a>
-                                <a href="#" class="nav-link"><i class='bx bx-group'></i> Sobre Nosotros</a>
-                                <a href="#" class="nav-link"><i class='bx bx-conversation'></i> Contacto</a>
+                                <a href="#" class="nav-link active"><i class='bx bx-book-bookmark' ></i> Universidades</a>
+                                <a href="#" class="nav-link active"><i class='bx bx-group'></i> Sobre Nosotros</a>
+                                <a href="#" class="nav-link active"><i class='bx bx-conversation'></i> Contacto</a>
                             </div>
                         </div>
                     </div>
@@ -125,20 +125,22 @@
                     <!-- Sección central -->
                     <main role="main" class="col-md-6">
                         <div class="main-section">
-                            <h1 class="h1 text-center bg-light text-dark p-3 rounded shadow-sm custom-heading">Proyectos</h1>
+                            <h1 class="h1  p-2 rounded custom-heading">Proyectos</h1>
                     
                             {% if proyectos %}
                             {% for proyecto in proyectos %}
-                            <div class="publicacion card mb-4">
+                            <div class="publicacion card p-3">
                                 <div class="card-body">
                                     <!-- Mostrar la foto de perfil del creador del proyecto -->
                                     <h2><a href="{% url 'ver_proyecto' proyecto.id %}" class="card-title">{{ proyecto.nombre_proyecto }}</a></h2>
                                     <div class="usern mb-3">
                                         <a href="{% url 'ver_perfil' proyecto.creador.username %}">
                                             <img src="{{ proyecto.creador.userprofile.foto_perfil.url }}" class="imagen-creador rounded-circle mr-2" alt="creador">
+                                            <div class="nombre-carrera">
                                             <b>
-                                                <p class="card-text d-inline">{{ proyecto.creador.username }}</p>
+                                                <p class="card-text d-inline">{{ proyecto.creador.username }}</p><h6>{{ proyecto.creador.userprofile.carrera.nombre_solo }}</h6>
                                             </b>
+                                        </div>
                                         </a>
                                     </div>
                                     <p class="card-text">Fecha de Creación: {{ proyecto.fecha_creacion }}</p>
@@ -178,8 +180,8 @@
         
                     <!-- Sección derecha -->
                     <div class="col-md-3">
-                        <div class="right-section border p-3 bg-white mb-4">
-                            <div class="new-container border p-3 bg-white mb-4">
+                        <div class="right-section rounded p-3">
+                            <div class="new-container rounded p-3 mb-4">
                                 <h3>Usuarios Destacados</h3>
                                 <li>Universidad de Antioquia</li>
                                 <li>Universidad de Cundinamarca</li>
@@ -187,7 +189,7 @@
                             </div>
         
                             <!-- Nuevo contenedor dentro del contenedor derecho -->
-                            <div class="new-container border p-3 bg-white mb-4">
+                            <div class="new-container rounded p-3  mb-4">
                                 <h4>Universidades</h4>
                                 <li>Universidad de Antioquia</li>
                                 <li>Universidad de Cundinamarca</li>

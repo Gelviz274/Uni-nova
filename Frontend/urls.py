@@ -7,18 +7,19 @@ from django.views.generic.base import RedirectView
 
 
 urlpatterns = [
+    path('accounts/login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('cerrar_sesion/', cerrar_sesion, name='cerrar_sesion'),
+    path('iniciar_sesion/', iniciar_sesion, name='iniciar_sesion'),
+    path('registrarse/', registrarse, name='registrarse'),
     path('crear_proyecto/', crear_proyecto, name='crear_proyecto'),
     path('proyecto/<int:proyecto_id>/', ver_proyecto, name='ver_proyecto'),
     path('crear_proyecto/',crear_proyecto,name='crear_proyecto'),
     path('inicio/',Inicio,name='inicio'),
     path('<username>/', perfil_usuario, name='ver_perfil'),
     path('', RedirectView.as_view(url='/inicio/', permanent=True)),
-    path('iniciar_sesion/', iniciar_sesion, name='iniciar_sesion'),
-    path('registrarse/', registrarse, name='registrarse'),
     path('edit_user/', edit_user, name='edit_user'),
     path('Admin-Inicio',Admin_Inicio,name='inicio_admin'),
     path('Prueba/',Prueba,name='prueba'),
     path('activate/<uidb64>/<token>/', activate, name='activate'),
-    path('cerrar_sesion/', cerrar_sesion, name='cerrar_sesion'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
