@@ -53,9 +53,7 @@ body {
     pointer-events: none;
     color: #6c757d; /* Color del icono */
 }
-.search{
-    border-radius: 40px;
-}
+
 
 .main-section h1{
     text-align: start;
@@ -99,15 +97,72 @@ body {
     align-items: flex-start;
 }
 
+/* Estilos personalizados */
+.input-group {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 25px;
+    overflow: hidden;
+}
 
+.search {
+    border: none;
+    border-radius: 25px 0 0 25px;
+    padding: 10px 15px;
+    font-size: 16px;
+}
 
+.btn-buscar {
+    border: none;
+    border-radius: 0 25px 25px 0;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-buscar i {
+    font-size: 20px;
+}
+
+/* Cambio de color del botón al pasar el ratón */
+.btn-buscar:hover {
+    background-color: #0056b3;
+}
+.perfilmenu{
+    display: flex;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px
+}
+.Media{
+    display: flex;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px
+}
 .imagen-creador {
     width: 50px; /* Ajustar según tu diseño */
     height: 50px; /* Ajustar según tu diseño */
     border-radius: 50%; /* Hacer la imagen circular */
 }
 
+.btn1{
+    background-color: #E8C39E;
+    font-size: 18px;
+    border-radius: 10px;
+    padding: 5px;
+    border: none;
+}
 
+.btn1:hover{
+    background-color: #DEB685;
+}
 
 .btn-buscar {
     background-color: #fff;
@@ -172,7 +227,33 @@ body {
 }
 
 /* Estilos adicionales para otros elementos del header si es necesario */
-
+.media-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+.media-item {
+    flex: 1 1 calc(33.333% - 10px);
+    max-width: calc(33.333% - 10px);
+}
+.media-item img, .media-item video {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+@media (max-width: 768px) {
+    .media-item {
+        flex: 1 1 calc(50% - 10px);
+        max-width: calc(50% - 10px);
+    }
+}
+@media (max-width: 480px) {
+    .media-item {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}   
 
 .input-group {
     position: relative;
@@ -265,4 +346,9 @@ body {
 }
 .nombre-carrera{
     display: flex;
+}
+
+
+.Media li{
+    list-style: none;
 }

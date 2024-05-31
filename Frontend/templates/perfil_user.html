@@ -48,12 +48,14 @@
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><strong>Nombre: </strong>{{ user.first_name }} {{ user.last_name}}</li>
+                            
                             {% if user_profile.fecha_nacimiento %}
                             <li class="list-group-item">
                                 <strong>Fecha de Nacimiento: </strong>
                                 {{ user_profile.fecha_nacimiento }}
                             </li>
                             {% endif %}
+                            
                             <li class="list-group-item"><strong>Universidad: </strong>{{ universidad_usuario }}</li>
                         </ul>
                     </div>

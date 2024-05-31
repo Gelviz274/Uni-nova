@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages, auth
 # Create your views here.
 from Usuarios.models import UserProfile
-from Proyectos.models import Proyecto
+from Proyectos.models import Proyecto, ProyectoImagen, ProyectoVideo
 from django.urls import reverse
 # Verification email
 from django.contrib.sites.shortcuts import get_current_site
@@ -188,18 +188,30 @@ def crear_proyecto(request):
         nombre_proyecto = request.POST.get('nombre_proyecto')
         descripcion = request.POST.get('descripcion')
         documentacion = request.FILES.get('documentacion')
-        videos = request.FILES.get('videos')
-        imagenes = request.FILES.get('imagenes')
+        videos = request.FILES.getlist('videos')
+        imagenes = request.FILES.getlist('imagenes')
 
         # Crear el nuevo proyecto en la base de datos
         proyecto = Proyecto.objects.create(
             nombre_proyecto=nombre_proyecto,
             creador=request.user,
             descripcion=descripcion,
-            documentacion=documentacion,
-            videos=videos,
-            imagenes=imagenes
+            documentacion=documentacion
         )
+
+        # Crear las nuevas entradas de videos en la base de datos
+        for video in videos:
+            ProyectoVideo.objects.create(
+                proyecto=proyecto,
+                video=video
+            )
+
+        # Crear las nuevas entradas de imagenes en la base de datos
+        for imagen in imagenes:
+            ProyectoImagen.objects.create(
+                proyecto=proyecto,
+                imagen=imagen
+            )
 
         # Redirigir a la página del proyecto creado
         return redirect('ver_proyecto', proyecto_id=proyecto.id)
@@ -208,7 +220,9 @@ def crear_proyecto(request):
 
 def ver_proyecto(request, proyecto_id):
     proyecto = get_object_or_404(Proyecto, id=proyecto_id)
-    return render(request, 'ver_proyecto.html', {'proyecto': proyecto})
+    imagenes = proyecto.proyectoimagen_set.all()
+    videos = proyecto.proyectovideo_set.all()
+    return render(request, 'ver_proyecto.html', {'proyecto': proyecto, 'imagenes': imagenes, 'videos': videos})
 
 def Prueba (request):
     return render(request, 'Prueba.html')
