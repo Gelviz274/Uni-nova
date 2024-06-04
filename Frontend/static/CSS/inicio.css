@@ -1,8 +1,11 @@
 *{
-    
-    
     top: 0;
 }
+body {
+    font-family: Arial, sans-serif;
+    background-color: #faebd7;
+}
+/*ESTILOS DEL HEADER*/
 .header {
     background-color: #DEB685;
     padding: 0;
@@ -15,10 +18,39 @@
     display: flex;
     align-items: center; /* Centra verticalmente el contenido */
 }
-
-body {
-    background-color: #f5e1ce;
+.search {
+    border: none;
+    border-radius: 25px 0 0 25px;
+    padding: 10px 15px;
+    font-size: 16px;
 }
+
+.btn-buscar {
+    border: none;
+    border-radius: 0 25px 25px 0;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-buscar i {
+    font-size: 20px;
+}
+.imagen_user{
+    padding: 1px;
+}
+.imagen_user img {
+    cursor: pointer;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Cambio de color del botón al pasar el ratón */
 
 .main-section {
     margin-bottom: 20px;
@@ -71,13 +103,24 @@ body {
     border: #E8C39E 1px solid;
     position: fixed;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    margin-right: 20px;
 }
+.right-section li{
+    list-style: none;
+}
+
 
 .left-section {
     position: fixed;
     top: 0;
     margin-top: 80px;
     width: 24%;
+}
+.left-section img{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .left-section a{
@@ -97,39 +140,13 @@ body {
     align-items: flex-start;
 }
 
-/* Estilos personalizados */
+
 .input-group {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 25px;
     overflow: hidden;
 }
 
-.search {
-    border: none;
-    border-radius: 25px 0 0 25px;
-    padding: 10px 15px;
-    font-size: 16px;
-}
-
-.btn-buscar {
-    border: none;
-    border-radius: 0 25px 25px 0;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.btn-buscar i {
-    font-size: 20px;
-}
-
-/* Cambio de color del botón al pasar el ratón */
-.btn-buscar:hover {
-    background-color: #0056b3;
-}
 .perfilmenu{
     display: flex;
     width: 100%;
@@ -190,9 +207,6 @@ body {
     font-weight: bold;
 }
 
-.imagen_user img {
-    cursor: pointer;
-}
 
 .menu-desplegable {
     display: none;
@@ -300,6 +314,8 @@ body {
     margin: 0;
     border-radius: 50%; 
     margin-right: 10px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 /* Estilos para el modal */
 .modal {
@@ -351,4 +367,63 @@ body {
 
 .Media li{
     list-style: none;
+}
+
+
+.media-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.media-item {
+    flex: 1 1 calc(50% - 10px); /* Ajusta el ancho según sea necesario */
+    max-width: calc(50% - 10px); /* Ajusta el ancho según sea necesario */
+    box-sizing: border-box;
+}
+
+.media-item img,
+.media-item video {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Ajustes responsivos para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .media-item {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}
+
+.new-container {
+    border: 1px solid #DEB685;
+}
+.new-container h3 {
+    color: #000;
+    font-family: 'Arial', sans-serif;
+}
+.new-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+.new-container ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid #dee2e6;
+}
+.new-container ul li:last-child {
+    border-bottom: none;
+}
+.new-container ul li span.username {
+    font-weight: bold;
+    color: #343a40;
+}
+.new-container ul li span.universidad {
+    font-style: italic;
+    color: #6c757d;
+}
+.new-container ul li span.no-universidad {
+    font-style: italic;
+    color: #dc3545;
 }

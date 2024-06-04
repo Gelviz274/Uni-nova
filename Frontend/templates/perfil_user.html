@@ -4,65 +4,183 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'IMG/Uninova.ico' %}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ user.username }} | Uni-nova</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{% static 'CSS/editperfil.css' %}">
+<link rel="shortcut icon" type="image/x-icon" href="{% static 'IMG/Uninova.ico' %}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ user.username }} | Uni-nova</title>
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="{% static 'CSS/editperfil.css' %}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'JS/perfil_user.js' %}"></script>
+
 </head>
 
 <body>
-    <div class="container mt-5">
-        <!-- Perfil del Usuario -->
-        <div class="row">
-            <div class="col-md-4">
-                <!-- Card de Perfil -->
-                <div class="card">
-                    <div class="imagen_user">
-                        {% if user_profile.foto_perfil %}
-                        <img src="{{ user_profile.foto_perfil.url }}" alt="Foto de perfil" class="img-fluid ">
-                        {% else %}
-                        <img src="{% static 'IMG/Defaultuser.png' %}" class="img-fluid rounded-circle">
-                        {% endif %}
+    {% if success_message %}
+    <script>
+        alert("{{ success_message }}");
+    </script>
+    {% endif %}
+    
+<!-- Modal -->
+<div id="editarPerfilModal" class="Modal" style="display:none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar Perfil</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editarPerfilForm" method="POST" action="{% url 'edit_user' %}">
+                    {% csrf_token %}
+                    <div class="form-group mb-3">
+                        <label for="username">Nombre de usuario:</label>
+                        <input type="text" id="username" name="username" class="form-control" value="{{ user.username }}">
                     </div>
-                    <div class="card-body text-center">
-                        <h4 class="card-title">{{ user.username }}</h4>
-                        <p class="card-text">{{ user_profile.carrera.nombre_solo }}</p>
-                        {% if user_profile.acerca_de_mi %}
-                        <p class="card-text">{{ user_profile.acerca_de_mi }}</p>
-                        {% else %}
-                        <p class="card-text">Sin descripción</p>
-                        {% endif %}
-                        {% if user == request.user %}
-                        <button id="editarPerfilBtn" class="btn btn-primary">Editar Perfil</button>
-                        {% endif %}
+                    <div class="form-group mb-3">
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" id="nombre" name="nombre" class="form-control" value="{{ user.first_name }}">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="apellido">Apellido:</label>
+                        <input type="text" id="apellido" name="apellido" class="form-control" value="{{ user.last_name }}">
+                    </div>
+                    <input type="submit" value="Guardar Cambios" class="btn1 btn-primary">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-sm-1 d-flex justify-content-center align-items-center" id="logodiv">
+                    <a href="{% url 'inicio' %}" class="logo">
+                        <img src="{% static 'IMG/LOGOUNINOVA.png' %}" alt="Logo" class="img-fluid" id="Logo">
+                    </a>
+                </div>
+                <div class="col-md-8 d-flex align-items-center justify-content-center">
+                    <!-- Barra de búsqueda -->
+                    <form class="form-inline w-100 position-relative">
+                        <div class="input-group w-100">
+                            <input class="search form-control mr-sm-2" type="search" placeholder="Buscar"
+                                aria-label="Buscar">
+                            <div class="input-group-append">
+                                <button class="btn1 btn-buscar" type="submit">
+                                    <i class="bx bx-search"></i> <!-- Icono de lupa -->
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
+                <div class="col-md-3 d-flex align-items-center justify-content-center">
+                    <!-- Foto de perfil -->
+                    <div class="usuario d-flex align-items-center position-relative">
+                        <a href="{% url 'ver_perfil' request.user.username %}">
+                            <div class="imagen_user d-flex align-items-center" id="imagenUser">
+                                {% if user_profile.foto_perfil %}
+                                <img src="{{ user_profile.foto_perfil.url }}" alt="Foto de perfil"
+                                    class="img-fluid rounded-circle" style="width: 40px; height: 40px; margin-right: 10px; ">
+                                {% else %}
+                                <img src="{% static 'IMG/Defaultuser.png' %}" class="img-fluid rounded-circle"
+                                    style="width: 40px; height: 40px; margin-right: 10px; ">
+                                {% endif %}
+                                {% if user.first_name %}
+                                <p class="mb-0 ml-3">{{ user.first_name }}</p>
+                                {% else %}
+                                <p class="mb-0 ml-3">{{ user.username }}</p>
+                                {% endif %}
+                            </div>
+                        </a>
+                        <button class="btn btn-link p-0 ml-2" id="dropdownButton">
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+                        <!-- Menú desplegable -->
+                        <div class="menu-desplegable" id="menuDesplegable">
+                            {% if user.is_authenticated %}
+                            {% if user.is_superuser %}
+                            <a href="{% url 'admin:index' %}" class="Btn-menu">Dashboard <i class='bx bxs-user'></i></a>
+                            {% endif %}
+                            {% endif %}
+                            <a href="#" class="Btn-menu">Configuración <i class='bx bxs-cog'></i></a>
+                            <a href="{% url 'cerrar_sesion' %}" class="btn btn-danger" id="CerrarSesion">Cerrar
+                                sesión</a>
+                        </div>
+                        <i class="bi bi-bell ml-3"></i>
                     </div>
                 </div>
             </div>
-            <div class="col-md-8">
+        </div>
+    </header>
+
+
+    <div class="profile-header mt-5">
+        <div class="containerperfil">
+            <div class="row">
+                <div class="col-md-2 d-flex align-items-center justify-content-center p-0">
+                    <div class="imagen_perfil">
+                        {% if user_profile.foto_perfil %}
+                        <img src="{{ user_profile.foto_perfil.url }}" alt="Foto de perfil" class="img-fluid">
+                        {% else %}
+                        <img src="{% static 'IMG/Defaultuser.png' %}" alt="Foto de perfil" class="img-fluid">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="container-info">
+                        <div class="nombre">
+                            <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+                            <h6>@{{ user.username }}</h6>
+                        </div>
+                        <p>{{ user_profile.carrera.nombre_solo }}</p>
+                        <div class="botoneditar d-flex justify-content-end">
+                            {% if user == request.user %}
+                                <button id="editarPerfilBtn" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#editarPerfilModal">Editar Perfil</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+
+    <div class="container mt-4"style="margin-top: 55px;">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
                 <!-- Información del Usuario -->
-                <div class="card mb-4">
+                <div class="card">
                     <div class="card-header">
                         Información Personal
                     </div>
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><strong>Nombre: </strong>{{ user.first_name }} {{ user.last_name}}</li>
-                            
+                            {% if user_profile.acerca_de_mi %}
+                        <p><h3>Acerca de mi: </h3>{{ user_profile.acerca_de_mi }}</p>
+                        {% else %}
+                        <p>Sin descripción</p>
+                        {% endif %}
                             {% if user_profile.fecha_nacimiento %}
                             <li class="list-group-item">
                                 <strong>Fecha de Nacimiento: </strong>
                                 {{ user_profile.fecha_nacimiento }}
                             </li>
                             {% endif %}
-                            
                             <li class="list-group-item"><strong>Universidad: </strong>{{ universidad_usuario }}</li>
                         </ul>
                     </div>
                 </div>
 
                 <!-- Proyectos del Usuario -->
-                <div class="card mb-4">
+                <div class="card">
                     <div class="card-header">
                         Proyectos Creados
                     </div>
@@ -73,8 +191,7 @@
                             <li class="list-group-item">
                                 <h5>{{ proyecto.nombre_proyecto }}</h5>
                                 <p>{{ proyecto.descripcion }}</p>
-                                <a href="{{ proyecto.get_absolute_url }}" class="btn btn-secondary btn-sm">Ver
-                                    Proyecto</a>
+                                <a href="{% url 'ver_proyecto' proyecto.id %}" class="btn btn-secondary btn-sm">Ver Proyecto</a>
                             </li>
                             {% endfor %}
                         </ul>
@@ -85,7 +202,7 @@
                 </div>
 
                 <!-- Proyectos Colaborados -->
-                <div class="card mb-4">
+                <div class="card">
                     <div class="card-header">
                         Proyectos Colaborados
                     </div>
@@ -96,8 +213,7 @@
                             <li class="list-group-item">
                                 <h5>{{ proyecto.nombre_proyecto }}</h5>
                                 <p>{{ proyecto.descripcion }}</p>
-                                <a href="{{ proyecto.get_absolute_url }}" class="btn btn-secondary btn-sm">Ver
-                                    Proyecto</a>
+                                <a href="{{ proyecto.get_absolute_url }}" class="btn btn-secondary btn-sm">Ver Proyecto</a>
                             </li>
                             {% endfor %}
                         </ul>
@@ -109,49 +225,18 @@
 
                 <!-- Configuración -->
                 {% if user == request.user %}
-                <div class="card mb-4">
+                <div class="card">
                     <div class="card-header">
                         Configuración
                     </div>
-                    <div class="card-body">
+                    <div class="card-body text-center">
                         <a href="{% url 'cerrar_sesion' %}" class="btn btn-danger">Cerrar sesión</a>
                     </div>
                 </div>
                 {% endif %}
             </div>
         </div>
-
-        <!-- Modal -->
-        <div id="editarPerfilModal" class="modal" style="display:none;">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <form id="editarPerfilForm" method="POST" action="{% url 'edit_user' %}">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="username">Nombre de usuario:</label>
-                        <input type="text" id="username" name="username" class="form-control" value="{{ user.username }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="nombre">Nombre:</label>
-                        <input type="text" id="nombre" name="nombre" class="form-control" value="{{ user.first_name }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="apellido">Apellido:</label>
-                        <input type="text" id="apellido" name="apellido" class="form-control" value="{{ user.last_name }}">
-                    </div>
-                    <input type="submit" value="Guardar Cambios" class="btn btn-primary">
-                </form>
-            </div>
-        </div>
-        
-        
     </div>
-
-    <!-- Bootstrap core JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="{% static 'JS/perfil_user.js' %}"></script>
 </body>
 
 </html>

@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
-from django.http import JsonResponse
+from django.http import HttpResponseForbidden, JsonResponse
 from django.db import IntegrityError
 from django.contrib.auth.models import User
 from django.contrib import messages, auth
+from datetime import datetime
+from .recomendacion import get_featured_users
 # Create your views here.
-from Usuarios.models import UserProfile
+from Usuarios.models import *
 from Proyectos.models import Proyecto, ProyectoImagen, ProyectoVideo
 from django.urls import reverse
 # Verification email
@@ -25,7 +27,7 @@ def iniciar_sesion(request):
         if request.method == 'POST':
             username = request.POST.get('username')
             password = request.POST.get('password')
-            
+            print(username, password)
             user = authenticate(username=username, password=password)
 
             if user is not None:
@@ -113,14 +115,17 @@ def cerrar_sesion(request):
 def Admin_Inicio (request):
     return render(request, 'inicio_admin.html')
 
-
 @login_required(login_url='iniciar_sesion')
 def Inicio(request):
     # Obtener todos los proyectos de la base de datos
     proyectos = Proyecto.objects.all()
     
-    # Obtener el perfil del usuario actual
-    user_profile = get_object_or_404(UserProfile, user=request.user)
+    # Obtener o crear el perfil del usuario actual
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+    
+    # Verificar si el perfil necesita ser completado
+    if not request.user.first_name or not request.user.last_name:
+        return redirect('completar_perfil', username=request.user.username)
 
     # Lista para almacenar los perfiles de los creadores de proyectos
     perfiles_creadores = []
@@ -133,8 +138,17 @@ def Inicio(request):
         except UserProfile.DoesNotExist:
             # Si el perfil de usuario no existe para el creador de este proyecto, agregar None a la lista
             perfiles_creadores.append(None)
-    
-    return render(request, 'inicio.html', {'proyectos': proyectos, 'user_profile': user_profile, 'perfiles_creadores': perfiles_creadores})
+
+    # Obtener usuarios destacados
+    featured_users = get_featured_users()
+
+    return render(request, 'inicio.html', {
+        'proyectos': proyectos, 
+        'user_profile': user_profile, 
+        'perfiles_creadores': perfiles_creadores,
+        'featured_users': featured_users
+    })
+
 @login_required(login_url='iniciar_sesion')
 def Prueba(request):
     # Obtener todos los proyectos de la base de datos
@@ -146,23 +160,75 @@ def Prueba(request):
     return render(request, 'Prueba.html')"""
 
 
+
+
 @login_required
-def perfil_usuario(request, username): 
+def perfil_usuario(request, username, success_message=None):
     user = get_object_or_404(User, username=username)
     user_profile = get_object_or_404(UserProfile, user=user)
     proyectos_creados = Proyecto.objects.filter(creador=user)
     proyectos_colaborados = user.proyectos_colaborados.all()
     universidad_usuario = user_profile.universidad
     
+    if not user.first_name or not user.last_name:
+        return redirect('completar_perfil', username=user.username)
+
     return render(request, 'perfil_user.html', {
         'user': user,
         'universidad_usuario': universidad_usuario,
         'proyectos_creados': proyectos_creados,
         'proyectos_colaborados': proyectos_colaborados,
-        'user_profile': user_profile
+        'user_profile': user_profile,
+        'success_message': success_message  # Pasar el mensaje de éxito al template
     })
 
+@login_required
+def completar_perfil(request, username):
+    user = get_object_or_404(User, username=username)
+    user_profile, created = UserProfile.objects.get_or_create(user=user)
+    if request.user != user:
+        return HttpResponseForbidden("No tienes permiso para completar este perfil.")
+    
+    user_profile, created = UserProfile.objects.get_or_create(user=user)
+    
+    if request.method == 'POST':
+        user.first_name = request.POST.get('first_name')
+        user.last_name = request.POST.get('last_name')
+        user.save()
 
+        user_profile.semestre_id = request.POST.get('semestre')
+        user_profile.universidad_id = request.POST.get('universidad')
+        user_profile.carrera_id = request.POST.get('carrera')
+        user_profile.acerca_de_mi = request.POST.get('acerca_de_mi')
+        user_profile.telefono = request.POST.get('telefono')
+        
+        # Manejar la fecha de nacimiento
+        fecha_nacimiento = request.POST.get('fecha_nacimiento')
+        if fecha_nacimiento:
+            try:
+                user_profile.fecha_nacimiento = datetime.strptime(fecha_nacimiento, '%Y-%m-%d')
+            except ValueError:
+                user_profile.fecha_nacimiento = None
+        else:
+            user_profile.fecha_nacimiento = None
+        
+        user_profile.mostrar_fecha_nacimiento = request.POST.get('mostrar_fecha_nacimiento') == 'on'
+        
+        # Manejar la foto de perfil
+        if 'foto_perfil' in request.FILES:
+            user_profile.foto_perfil = request.FILES['foto_perfil']
+        
+        user_profile.save()
+
+        return redirect('ver_perfil', username=user.username)
+    
+    context = {
+        'user_profile': user_profile,
+        'semestres': Semestre.objects.all(),
+        'universidades': Universidad.objects.all(),
+        'carreras': Carrera.objects.all(),
+    }
+    return render(request, 'completar_perfil.html', context)
 
 @login_required
 def edit_user(request):
@@ -176,11 +242,11 @@ def edit_user(request):
         # Genera la nueva URL del perfil
         perfil_url = reverse('ver_perfil', kwargs={'username': user.username})
         
-        # Devuelve la nueva URL en la respuesta JSON
-        return JsonResponse({'success': True, 'message': 'Cambios guardados exitosamente.', 'url': perfil_url})
+        # Redirige al perfil del usuario con un mensaje de éxito
+        return redirect(perfil_url + '?success=Cambios guardados exitosamente.')
     else:
         return JsonResponse({'success': False, 'message': 'Método no permitido.'}, status=405)
-    
+
 
 def crear_proyecto(request):
     if request.method == 'POST':
@@ -220,9 +286,14 @@ def crear_proyecto(request):
 
 def ver_proyecto(request, proyecto_id):
     proyecto = get_object_or_404(Proyecto, id=proyecto_id)
-    imagenes = proyecto.proyectoimagen_set.all()
-    videos = proyecto.proyectovideo_set.all()
-    return render(request, 'ver_proyecto.html', {'proyecto': proyecto, 'imagenes': imagenes, 'videos': videos})
-
+    imagenes = proyecto.imagenes.all()  # Utiliza el related_name 'imagenes'
+    videos = proyecto.videos.all()  # Utiliza el related_name 'videos'
+    
+    context = {
+        'proyecto': proyecto,
+        'imagenes': imagenes,
+        'videos': videos,
+    }
+    return render(request, 'ver_proyecto.html', context)
 def Prueba (request):
     return render(request, 'Prueba.html')

@@ -1,0 +1,26 @@
+*{
+    left: 0;
+    right: 0;
+}
+html{
+    scroll-behavior: smooth;
+}
+.media-container {
+    margin-top: 20px;
+}
+
+.media-container h2 {
+    margin-bottom: 15px;
+}
+
+.media-container .col-md-6,
+.media-container .col-md-4 {
+    padding: 0 5px;
+}
+
+.media-container video,
+.media-container img {
+    border-radius: 8px;
+    max-height: 300px;
+    object-fit: cover;
+}

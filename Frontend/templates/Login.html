@@ -1,9 +1,10 @@
 {% load static %} 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'IMG/UninovaICO.ico' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'IMG/Uninova.ico' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="{% static 'css/login_prueba.css' %}"> 
@@ -27,45 +28,46 @@
                 <form action="{% url 'iniciar_sesion' %}" method="post" class="sign-in-form">
                     {% csrf_token %}
                     <img src="{% static 'img/LOGOUNINOVA.png' %}" class="Logos">
-                        <h2 class="Title">Iniciar Sesión</h2>
-                        <h2 class="Welcome">¡ Bienvenido de nuevo a Uninova !</h2>
+                    <h2 class="Title">Iniciar Sesión</h2>
+                    <h2 class="Welcome">¡ Bienvenido de nuevo a Uninova !</h2>
                     <div class="input-field">
                         <i class='bx bxs-user'></i>
                         <input type="text" id="username" name="username" placeholder="Username" required> 
                     </div>
                     <div class="input-field">
                         <i class='bx bxs-lock-alt'></i>
-                        <input type="password" id="password" name="password" placeholder="Contraseña" required>
+                        <input type="password" id="signin_password" name="password" placeholder="Contraseña" required>
+                        <span class="toggle-password" onclick="togglePassword('signin_password')"><i class='bx bx-show-alt'></i></span>
                     </div>
                     <input type="submit" value="Iniciar sesión" class="btn solid" />
-                    
                 </form>
 
-                <form  action="{% url 'registrarse' %}" method="post" class="sign-up-form">
+                <form action="{% url 'registrarse' %}" method="post" class="sign-up-form">
                     {% csrf_token %}
                     <img src="{% static 'img/LOGOUNINOVA.png' %}" class="Logos">
-                        <h2 class="Title">Registrate </h2>
-                        <h2 class="Welcome"> ¡ Bienvenido a Uninova !</h2>
+                    <h2 class="Title">Registrate </h2>
+                    <h2 class="Welcome"> ¡ Bienvenido a Uninova !</h2>
                     <div class="input-field">
                         <i class='bx bxs-user'></i>
                         <input type="text" id="username" name="username" placeholder="Username" required> 
-                    
                     </div>
                     <div class="input-field">
                         <i class='bx bxs-envelope'></i>
                         <input type="email" id="email" name="email" placeholder="email@example.com" required>
-                    
                     </div>
                     <div class="input-field">
                         <i class='bx bxs-lock-alt'></i>
                         <input type="password" id="password" name="password" placeholder="Contraseña" required>
+                        <span class="toggle-password" onclick="togglePassword('password')"><i class='bx bx-show-alt'></i></span>
                     </div>
                     <div class="input-field">
                         <i class='bx bxs-lock-alt'></i>
                         <input type="password" id="confirm_password" name="confirm_password" placeholder="Verificar Contraseña" required>
+                        <span class="toggle-password" onclick="togglePassword('confirm_password')"><i class='bx bx-show-alt'></i></span>
                     </div>
+                    <p id="password-error" class="error-message">Las contraseñas deben ser iguales y de al menos 8 caracteres.</p>
                     <input type="submit" value="Registrate" class="btn" />
-               </form>
+                </form>
             </div>
         </div>
 
@@ -73,27 +75,22 @@
             <div class="panel left-panel">
                 <div class="content">
                     <h3>¡Bienvenido a UNINOVA!</h3>
-                    <p>Únete y empieza a explorar el mundo del conocimiento con la comunidad de Uninova.
-                    </p>
-                    <button class="btn transparent" id="sign-up-btn">
-                        Registrate
-                    </button>
+                    <p>Únete y empieza a explorar el mundo del conocimiento con la comunidad de Uninova.</p>
+                    <button class="btn transparent" id="sign-up-btn">Registrate</button>
                 </div>
                 <img src="{% static 'IMG/Img Login/login2.svg' %}" class="image" alt="Imagen Login">
             </div>
             <div class="panel right-panel">
                 <div class="content">
                     <h3>¿Ya Tienes Cuenta?</h3>
-                    <p>¡Inicia sesión para acceder a todos los recursos y funcionalidades de UNINOVA! </p>
-                    <button class="btn transparent" id="sign-in-btn">
-                        Iniciar Sesión
-                    </button>
+                    <p>¡Inicia sesión para acceder a todos los recursos y funcionalidades de UNINOVA!</p>
+                    <button class="btn transparent" id="sign-in-btn">Iniciar Sesión</button>
                 </div>
                 <img src="{% static 'IMG/Img Login/register.svg' %}" class="image" alt="Imagen Register">
             </div>
         </div> 
     </div>
      
-    <script src="{% static 'js/Loginr.js' %}"></script>
+    <script src="{% static 'JS/Loginr.js' %}"></script>
 </body>
 </html>

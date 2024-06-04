@@ -2,21 +2,195 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
+    background-color: #faebd7;
 }
 
-
-.imagen_user{
+.header {
+    background-color: #DEB685;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    height: 70px;
     display: flex;
+    align-items: center;
+}
+
+.search {
+    border: none;
+    border-radius: 25px 0 0 25px;
+    padding: 10px 15px;
+    font-size: 16px;
+}
+
+.btn-buscar {
+    border: none;
+    border-radius: 0 25px 25px 0;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    display: flex;
+    align-items: center;
     justify-content: center;
 }
 
-.imagen_user img{
-    margin: 20px 20px 0px 20px;
-    border-radius: 50%;
-    width: 220px;
-    height: 200px;
+.btn-buscar i {
+    font-size: 20px;
 }
+
+.btn-buscar:hover {
+    background-color: #0056b3;
+}
+.logo img {
+    width: 60px;
+    height: auto;
+}
+
+
+.profile-header {
+    background-color: #b2b2b2;
+    align-items: center;
+}
+
+.containerperfil {
+    padding: 10px;
+    display: grid;
+    height: 400px;
+    align-items: end;
+}
+
+.imagen_user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.imagen_user img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Estilos para el modal */
+#editarPerfilModal {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
+    z-index: 9999;
+    overflow: auto;
+}
+
+/* Centrar el modal verticalmente */
+.modal-dialog {
+    position: relative;
+    margin: auto;
+    margin-top: 10%; /* Puedes ajustar este valor para cambiar la posición vertical */
+    width: 80%; /* Ancho del modal */
+    max-width: 400px; /* Ancho máximo */
+}
+
+/* Contenido del modal */
+.modal-content {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra */
+}
+
+/* Estilos para el botón de cerrar */
+.btn-close {
+    color: black; /* Cambiado de white a black para que sea visible en el fondo oscuro */
+}
+
+/* Estilos para el formulario dentro del modal */
+#editarPerfilModal form {
+    padding: 20px;
+}
+
+/* Estilos para los campos de entrada */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+/* Estilos para el botón de enviar */
+.btn1 {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn1:hover {
+    background-color: #0056b3;
+}
+
+
+/*CONTAINER PERFIL*/
+
+.container-info {
+    padding: 20px;
+    border-radius: 8px;
+}
+.imagen_perfil img{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.nombre {
+    margin-bottom: 10px;
+}
+
+.nombre h2 {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.nombre h6 {
+    font-size: 16px;
+    color: #888;
+    margin-bottom: 15px;
+}
+
+.container-info p {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.btn-editar-perfil {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-editar-perfil:hover {
+    background-color: #2980b9;
+}
+
 .card {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -49,41 +223,87 @@ body {
     font-weight: 600;
 }
 
-.btn-primary, .btn-secondary, .btn-danger {
+.btn-primary,
+.btn-secondary,
+.btn-danger {
     border-radius: 20px;
     padding: 0.5rem 2rem;
     font-size: 1rem;
 }
-/* Establece el modal para que esté oculto inicialmente */
-.modal {
-    
-    justify-content: center;
-    align-items: center; /* Centra verticalmente */
-    position: fixed;
+
+
+
+
+
+
+
+* {
     top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 100;
-    background-color: rgba(68, 66, 66, 0.5);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+}
+
+.input-group {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 25px;
     overflow: hidden;
 }
 
-
-.modal-content {
-    
+.perfilmenu {
+    display: flex;
+    width: 100%;
+    height: auto;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fefefe;
-    border: none;
-    padding: 2rem;
-    width: 800px;
-    height: 500px;
-    
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
-.modal-content span{
-    font-size: 1.5rem;
-    text-align: end;
+
+.Media {
+    display: flex;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.imagen-creador {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.btn1 {
+    background-color: #E8C39E;
+    font-size: 18px;
+    border-radius: 10px;
+    padding: 5px;
+    border: none;
+}
+
+.btn1:hover {
+    background-color: #DEB685;
+}
+
+.usuario {
+    text-align: center;
+    margin-top: 0;
+}
+
+.usuario a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+}
+
+.imagen_user img {
+    cursor: pointer;
+}
+
+.menu-desplegable {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;  
 }

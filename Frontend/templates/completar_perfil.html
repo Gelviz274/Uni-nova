@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Completar Perfil</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'CSS/completar_perfil.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center mb-4">Bienvenido a Uninova</h2>
+        
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="first_name">Nombre:</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" value="{{ user.first_name }}" required>
+            </div>
+            <div class="form-group">
+                <label for="last_name">Apellido:</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" value="{{ user.last_name }}" required>
+            </div>
+            <div class="form-group">
+                <label for="semestre">Semestre:</label>
+                <select class="form-control" id="semestre" name="semestre">
+                    {% for semestre in semestres %}
+                        <option value="{{ semestre.id }}" {% if user_profile.semestre_id == semestre.id %}selected{% endif %}>{{ semestre.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="universidad">Universidad:</label>
+                <select class="form-control" id="universidad" name="universidad">
+                    {% for universidad in universidades %}
+                        <option value="{{ universidad.id }}" {% if user_profile.universidad_id == universidad.id %}selected{% endif %}>{{ universidad.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="carrera">Carrera:</label>
+                <select class="form-control" id="carrera" name="carrera">
+                    {% for carrera in carreras %}
+                        <option value="{{ carrera.id }}" {% if user_profile.carrera_id == carrera.id %}selected{% endif %}>{{ carrera.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="acerca_de_mi">Acerca de mí:</label>
+                <textarea class="form-control" id="acerca_de_mi" name="acerca_de_mi">{{ user_profile.acerca_de_mi }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="telefono">Teléfono:</label>
+                <input type="text" class="form-control" id="telefono" name="telefono" value="{{ user_profile.telefono }}">
+            </div>
+            <div class="form-group">
+                <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+                <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ user_profile.fecha_nacimiento }}">
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="mostrar_fecha_nacimiento" name="mostrar_fecha_nacimiento" {% if user_profile.mostrar_fecha_nacimiento %}checked{% endif %}>
+                <label class="form-check-label" for="mostrar_fecha_nacimiento">Mostrar Fecha de Nacimiento</label>
+            </div>
+            <div class="form-group text-center">
+                <label for="foto_perfil">Foto de Perfil:</label>
+                {% if user_profile.foto_perfil %}
+                    <img src="{{ user_profile.foto_perfil.url }}" alt="Foto de Perfil" >
+                {% endif %}
+                <input type="file" class="form-control-file" id="foto_perfil" name="foto_perfil">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

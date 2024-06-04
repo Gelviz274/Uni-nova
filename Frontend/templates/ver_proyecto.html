@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,70 @@
     <title>Ver Proyecto</title>
 </head>
 <body>
+
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-sm-1 d-flex justify-content-center align-items-center" id="logodiv">
+                    <a href="{% url 'inicio' %}" class="logo">
+                        <img src="{% static 'IMG/LOGOUNINOVA.png' %}" alt="Logo" class="img-fluid" id="Logo">
+                    </a>
+                </div>
+                <div class="col-md-8 d-flex align-items-center justify-content-center">
+                    <!-- Barra de búsqueda -->
+                    <form class="form-inline w-100 position-relative">
+                        <div class="input-group w-100">
+                            <input class="search form-control mr-sm-2" type="search" placeholder="Buscar"
+                                aria-label="Buscar">
+                            <div class="input-group-append">
+                                <button class="btn1 btn-buscar" type="submit">
+                                    <i class="bx bx-search"></i> <!-- Icono de lupa -->
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
+                <div class="col-md-3 d-flex align-items-center justify-content-center">
+                    <!-- Foto de perfil -->
+                    <div class="usuario d-flex align-items-center position-relative">
+                        <a href="{% url 'ver_perfil' request.user.username %}">
+                            <div class="imagen_user d-flex align-items-center" id="imagenUser">
+                                {% if user_profile.foto_perfil %}
+                                <img src="{{ user_profile.foto_perfil.url }}" alt="Foto de perfil"
+                                    class="img-fluid rounded-circle" style="width: 40px; height: 40px; margin-right: 20px;">
+                                {% else %}
+                                <img src="{% static 'IMG/Defaultuser.png' %}" class="img-fluid rounded-circle"
+                                    style="width: 40px; height: 40px;">
+                                {% endif %}
+                                {% if user.first_name %}
+                                <p class="mb-0 ml-2">{{ user.first_name }}</p>
+                                {% else %}
+                                <p class="mb-0 ml-2">{{ user.username }}</p>
+                                {% endif %}
+                            </div>
+                        </a>
+                        <button class="btn btn-link p-0 ml-2" id="dropdownButton">
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+                        <!-- Menú desplegable -->
+                        <div class="menu-desplegable" id="menuDesplegable">
+                            {% if user.is_authenticated %}
+                            {% if user.is_superuser %}
+                            <a href="{% url 'admin:index' %}" class="Btn-menu">Dashboard <i class='bx bxs-user'></i></a>
+                            {% endif %}
+                            {% endif %}
+                            <a href="#" class="Btn-menu">Configuración <i class='bx bxs-cog'></i></a>
+                            <a href="{% url 'cerrar_sesion' %}" class="btn btn-danger" id="CerrarSesion">Cerrar
+                                sesión</a>
+                        </div>
+                        <i class="bi bi-bell ml-3"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
     <h1>{{ proyecto.nombre_proyecto }}</h1>
     <p>Creador: {{ proyecto.creador }}</p>
     <p>Fecha de Creación: {{ proyecto.fecha_creacion }}</p>

@@ -1,0 +1,66 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5dc; /* Cambio de color de fondo */
+}
+
+.container {
+    width: 60%; /* Ajuste del ancho del contenedor */
+    margin: 50px auto; /* Centrado vertical y horizontal */
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #f9f5e8; /* Cambio de color de fondo */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    color: #8b4513; /* Cambio de color del título */
+}
+
+.form-group {
+    margin-bottom: 20px; /* Aumento del espacio entre los grupos de formulario */
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #8b4513; /* Cambio de color de las etiquetas */
+}
+
+input[type="text"],
+input[type="date"],
+input[type="file"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc; /* Añadido un borde para resaltar los campos */
+    border-radius: 5px;
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #8b4513; /* Cambio de color del botón */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #a0522d; /* Cambio de color al pasar el ratón */
+}
+
+img {
+    display: block;
+    width: 200px;
+    height: 200px;
+    margin: 10px auto; /* Centrado horizontal de la imagen */
+    border-radius: 50%;
+    object-fit: cover; /* Asegura que la imagen de perfil sea circular */
+}
+

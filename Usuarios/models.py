@@ -36,7 +36,7 @@ class UserProfile(models.Model):
     carrera = models.ForeignKey(Carrera, on_delete=models.SET_NULL, null=True, blank=True)
     foto_perfil = models.ImageField(upload_to=upload_to_usuario_media, null=True, blank=True)
     acerca_de_mi = models.TextField(null=True, blank=True)
-    telefono = models.CharField(max_length=20, null=True, blank=True)
+    telefono = models.CharField(max_length=10, null=True, blank=True)
     fecha_nacimiento = models.DateField(null=True, blank=True)
     mostrar_fecha_nacimiento = models.BooleanField(default=True)
 

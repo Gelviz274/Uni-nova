@@ -14,12 +14,12 @@ urlpatterns = [
     path('crear_proyecto/', crear_proyecto, name='crear_proyecto'),
     path('proyecto/<int:proyecto_id>/', ver_proyecto, name='ver_proyecto'),
     path('crear_proyecto/',crear_proyecto,name='crear_proyecto'),
-    path('inicio/',Inicio,name='inicio'),
-    path('<username>/', perfil_usuario, name='ver_perfil'),
-    path('', RedirectView.as_view(url='/inicio/', permanent=True)),
     path('edit_user/', edit_user, name='edit_user'),
-    path('Admin-Inicio',Admin_Inicio,name='inicio_admin'),
-    path('Prueba/',Prueba,name='prueba'),
+    path('Admin-Inicio/',Admin_Inicio,name='inicio_admin'),
     path('activate/<uidb64>/<token>/', activate, name='activate'),
+    path('inicio/',Inicio,name='inicio'),
+    path('', RedirectView.as_view(url='/inicio/', permanent=True)),
+    path('<str:username>/', perfil_usuario, name='ver_perfil'),
+    path('completar-perfil/<str:username>/', completar_perfil, name='completar_perfil'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

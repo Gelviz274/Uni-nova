@@ -1,52 +1,42 @@
-const sign_in_btn = document.querySelector("#sign-in-btn");
-const sign_up_btn = document.querySelector("#sign-up-btn");
-const container = document.querySelector(".container");
+document.addEventListener('DOMContentLoaded', function() {
+  const passwordInput = document.getElementById('password');
+  const confirmPasswordInput = document.getElementById('confirm_password');
+  const errorMessage = document.getElementById('password-error');
 
-sign_up_btn.addEventListener("click", () => {
-  container.classList.add("sign-up-mode");
-});
+  function validatePasswords() {
+      const password = passwordInput.value;
+      const confirmPassword = confirmPasswordInput.value;
 
-sign_in_btn.addEventListener("click", () => {
-  container.classList.remove("sign-up-mode");
-});
-
-function previewFiles(type) {
-  let files = document.getElementById(type).files;
-  let previewContainer = type === 'imagenes' ? document.getElementById('imagePreviews') : document.getElementById('videoPreviews');
-  previewContainer.innerHTML = '';
-
-  for (let i = 0; i < files.length; i++) {
-      let file = files[i];
-      let reader = new FileReader();
-      reader.onload = function(e) {
-          let previewElement;
-          if (type === 'imagenes') {
-              previewElement = document.createElement('img');
-              previewElement.src = e.target.result;
-              previewElement.style.maxWidth = '100px';
-              previewElement.style.margin = '10px';
-          } else if (type === 'videos') {
-              previewElement = document.createElement('video');
-              previewElement.src = e.target.result;
-              previewElement.controls = true;
-              previewElement.style.maxWidth = '100px';
-              previewElement.style.margin = '10px';
-          }
-          previewContainer.appendChild(previewElement);
-      };
-      reader.readAsDataURL(file);
+      if (password.length >= 8 && confirmPassword.length >= 8 && password === confirmPassword) {
+          errorMessage.style.display = 'none';
+      } else {
+          errorMessage.style.display = 'block';
+      }
   }
-}
 
-function validateForm() {
-  let nombreProyecto = document.getElementById('nombre_proyecto').value;
-  let descripcion = document.getElementById('descripcion').value;
-  let videos = document.getElementById('videos').files.length;
-  let imagenes = document.getElementById('imagenes').files.length;
+  passwordInput.addEventListener('input', validatePasswords);
+  confirmPasswordInput.addEventListener('input', validatePasswords);
 
-  if (!nombreProyecto || !descripcion || (!videos && !imagenes)) {
-      alert('Por favor, complete todos los campos y asegúrese de subir al menos una imagen o video.');
-      return false;
+  window.togglePassword = function(fieldId) {
+      const field = document.getElementById(fieldId);
+      if (field.type === "password") {
+          field.type = "text";
+      } else {
+          field.type = "password";
+      }
   }
-  return true;
-}
+
+  const signInBtn = document.getElementById('sign-in-btn');
+  const signUpBtn = document.getElementById('sign-up-btn');
+  const container = document.querySelector('.container');
+
+  if (signInBtn && signUpBtn && container) {
+      signUpBtn.addEventListener("click", () => {
+          container.classList.add("sign-up-mode");
+      });
+
+      signInBtn.addEventListener("click", () => {
+          container.classList.remove("sign-up-mode");
+      });
+  }
+});
