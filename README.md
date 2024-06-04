@@ -40,8 +40,8 @@ Sigue estos pasos para configurar y ejecutar el proyecto localmente:
 
 1. **Clonar el Repositorio**:
     ```sh
-    git clone https://github.com/tu-usuario/uninova.git
-    cd uninova
+    git clone https://github.com/tu-usuario/Uni-nova.git
+    cd Uni-nova
     ```
 
 2. **Instalar Dependencias**:
