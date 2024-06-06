@@ -1,7 +1,7 @@
-# 👨‍🎓 Uninova 👩‍🎓
+# 👨‍🎓 Uni-nova 👩‍🎓
 <img src="https://github.com/Gelviz274/Uni-nova/assets/148910408/f2034100-435f-435a-a779-74639ec6a196" alt="Uninova" width="400">
 
-¡Bienvenido a Uninova! Esta es una plataforma web diseñada para facilitar la colaboración y la gestión de proyectos entre usuarios. Con Uninova, puedes crear, seguir y colaborar en proyectos de manera eficiente, todo desde una interfaz intuitiva y fácil de usar.
+¡Bienvenido a Uni-nova! Esta es una plataforma web diseñada para facilitar la colaboración y la gestión de proyectos entre usuarios. Con Uninova, puedes crear, seguir y colaborar en proyectos de manera eficiente, todo desde una interfaz intuitiva y fácil de usar.
 
 ## Tabla de Contenidos
 
@@ -13,9 +13,9 @@
 - [Contribuciones](#contribuciones)
 - [Licencia](#licencia)
 
-## Acerca de Uninova
+## Acerca de Uni-nova
 
-Uninova es una plataforma web diseñada para facilitar la colaboración entre usuarios y la gestión de proyectos. Ofrece herramientas intuitivas y eficientes para crear, seguir y colaborar en proyectos de manera efectiva.
+Uni-nova es una plataforma web diseñada para facilitar la colaboración entre usuarios y la gestión de proyectos. Ofrece herramientas intuitivas y eficientes para crear, seguir y colaborar en proyectos de manera efectiva.
 
 ## Características
 
@@ -40,8 +40,8 @@ Sigue estos pasos para configurar y ejecutar el proyecto localmente:
 
 1. **Clonar el Repositorio**:
     ```sh
-    git clone https://github.com/tu-usuario/uninova.git
-    cd uninova
+    git clone https://github.com/tu-usuario/Uni-nova.git
+    cd Uni-nova
     ```
 
 2. **Instalar Dependencias**:
@@ -67,7 +67,7 @@ Sigue estos pasos para configurar y ejecutar el proyecto localmente:
     ```
 
 5. **Acceder a la Aplicación**:
-    Abre tu navegador web y visita `http://localhost:8000` para acceder a Uninova.
+    Abre tu navegador web y visita `http://localhost:8000` para acceder a Uni-nova.
 
 ## Desarrolladores
 
@@ -79,7 +79,7 @@ Uninova es desarrollado por un equipo de desarrolladores apasionados:
 
 ## Contribuciones
 
-¡Las contribuciones son bienvenidas y apreciadas! Si deseas contribuir al desarrollo de Uninova, sigue estos pasos:
+¡Las contribuciones son bienvenidas y apreciadas! Si deseas contribuir al desarrollo de Uni-nova, sigue estos pasos:
 
 1. Haz un fork del repositorio.
 2. Crea una nueva rama para tu función (`git checkout -b feature/nueva-funcion`).
@@ -89,4 +89,4 @@ Uninova es desarrollado por un equipo de desarrolladores apasionados:
 
 ---
 
-¡Gracias por tu interés en Uninova! Esperamos que disfrutes utilizando nuestra plataforma para colaborar en proyectos y conectar con otros usuarios. Si tienes alguna pregunta o sugerencia, no dudes en contactarnos.
+¡Gracias por tu interés en Uni-nova! Esperamos que disfrutes utilizando nuestra plataforma para colaborar en proyectos y conectar con otros usuarios. Si tienes alguna pregunta o sugerencia, no dudes en contactarnos.
