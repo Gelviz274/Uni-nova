@@ -28,9 +28,8 @@
                 <div class="col-md-8 d-flex align-items-center justify-content-center">
                     <!-- Barra de búsqueda -->
                     <form class="form-inline w-100 position-relative">
-                        <div class="input-group w-100">
-                            <input class="search form-control mr-sm-2" type="search" placeholder="Buscar"
-                                aria-label="Buscar">
+                        <div class="input-group w-40">
+                            <input class="search form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
                             <div class="input-group-append">
                                 <button class="btn1 btn-buscar" type="submit">
                                     <i class="bx bx-search"></i> <!-- Icono de lupa -->
@@ -39,26 +38,19 @@
                         </div>
                     </form>
                 </div>
-
-
                 <div class="col-md-3 d-flex align-items-center justify-content-center">
                     <!-- Foto de perfil -->
                     <div class="usuario d-flex align-items-center position-relative">
                         <a href="{% url 'ver_perfil' request.user.username %}">
                             <div class="imagen_user d-flex align-items-center" id="imagenUser">
-                                {% if user_profile.foto_perfil %}
-                                <img src="{{ user_profile.foto_perfil.url }}" alt="Foto de perfil"
-                                    class="img-fluid rounded-circle"
-                                    style="width: 40px; height: 40px; margin-right: 10px; ">
+                                {% if authenticated_user_profile and authenticated_user_profile.foto_perfil %}
+                                    <img src="{{ authenticated_user_profile.foto_perfil.url }}" alt="Foto de perfil"
+                                         class="img-fluid rounded-circle" style="width: 40px; height: 40px; margin-right: 20px;">
                                 {% else %}
-                                <img src="{% static 'IMG/Defaultuser.png' %}" class="img-fluid rounded-circle"
-                                    style="width: 40px; height: 40px; margin-right: 10px; ">
+                                    <img src="{% static 'IMG/Defaultuser.png' %}" class="img-fluid rounded-circle"
+                                         style="width: 40px; height: 40px;">
                                 {% endif %}
-                                {% if user.first_name %}
-                                <p class="mb-0 mr-3">{{ user.first_name }}</p>
-                                {% else %}
-                                <p class="mb-0 mr-3">{{ user.username }}</p>
-                                {% endif %}
+                                <p class="mb-0 ml-2">{{ authenticated_user_name }}</p>
                             </div>
                         </a>
                         <button class="btn btn-link p-0 ml-2" id="dropdownButton">
@@ -67,13 +59,12 @@
                         <!-- Menú desplegable -->
                         <div class="menu-desplegable" id="menuDesplegable">
                             {% if user.is_authenticated %}
-                            {% if user.is_superuser %}
-                            <a href="{% url 'admin:index' %}" class="Btn-menu">Dashboard <i class='bx bxs-user'></i></a>
-                            {% endif %}
+                                {% if user.is_superuser %}
+                                    <a href="{% url 'admin:index' %}" class="Btn-menu">Dashboard <i class='bx bxs-user'></i></a>
+                                {% endif %}
                             {% endif %}
                             <a href="#" class="Btn-menu">Configuración <i class='bx bxs-cog'></i></a>
-                            <a href="{% url 'cerrar_sesion' %}" class="btn btn-danger" id="CerrarSesion">Cerrar
-                                sesión</a>
+                            <a href="{% url 'cerrar_sesion' %}" class="btn btn-danger" id="CerrarSesion">Cerrar sesión</a>
                         </div>
                         <i class="bi bi-bell ml-3"></i>
                     </div>
@@ -81,6 +72,7 @@
             </div>
         </div>
     </header>
+    
 
     /* Cuerpo */
 
@@ -108,7 +100,7 @@
                     </a>
 
                     <div class="nav flex-column">
-                        <a href="#" class="nav-link active"><i class='bx bx-home'></i> Inicio</a>
+                        <a href="{% url 'inicio' %}" class="nav-link active"><i class='bx bx-home'></i> Inicio</a>
                         <a href="#" class="nav-link active"><i class='bx bx-book-bookmark'></i> Universidades</a>
                         <a href="#" class="nav-link active"><i class='bx bx-group'></i> Sobre Uni-nova</a>
                         <button id="abrirModal" class="btn1">Publicar Proyecto</button>

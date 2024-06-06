@@ -1,12 +1,21 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'IMG/Uninova.ico' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ver Proyecto</title>
+    <title>Uni-nova</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="{% static 'CSS/inicio.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css" rel="stylesheet">
 </head>
+
 <body>
+    /* HEADER */
 
     <header class="header">
         <div class="container-fluid">
@@ -19,7 +28,7 @@
                 <div class="col-md-8 d-flex align-items-center justify-content-center">
                     <!-- Barra de búsqueda -->
                     <form class="form-inline w-100 position-relative">
-                        <div class="input-group w-100">
+                        <div class="input-group w-40">
                             <input class="search form-control mr-sm-2" type="search" placeholder="Buscar"
                                 aria-label="Buscar">
                             <div class="input-group-append">
@@ -30,25 +39,20 @@
                         </div>
                     </form>
                 </div>
-
-
                 <div class="col-md-3 d-flex align-items-center justify-content-center">
                     <!-- Foto de perfil -->
                     <div class="usuario d-flex align-items-center position-relative">
                         <a href="{% url 'ver_perfil' request.user.username %}">
                             <div class="imagen_user d-flex align-items-center" id="imagenUser">
-                                {% if user_profile.foto_perfil %}
-                                <img src="{{ user_profile.foto_perfil.url }}" alt="Foto de perfil"
-                                    class="img-fluid rounded-circle" style="width: 40px; height: 40px; margin-right: 20px;">
+                                {% if authenticated_user_profile and authenticated_user_profile.foto_perfil %}
+                                <img src="{{ authenticated_user_profile.foto_perfil.url }}" alt="Foto de perfil"
+                                    class="img-fluid rounded-circle"
+                                    style="width: 40px; height: 40px; margin-right: 20px;">
                                 {% else %}
                                 <img src="{% static 'IMG/Defaultuser.png' %}" class="img-fluid rounded-circle"
                                     style="width: 40px; height: 40px;">
                                 {% endif %}
-                                {% if user.first_name %}
-                                <p class="mb-0 ml-2">{{ user.first_name }}</p>
-                                {% else %}
-                                <p class="mb-0 ml-2">{{ user.username }}</p>
-                                {% endif %}
+                                <p class="mb-0 ml-2">{{ authenticated_user_name }}</p>
                             </div>
                         </a>
                         <button class="btn btn-link p-0 ml-2" id="dropdownButton">
@@ -71,26 +75,175 @@
             </div>
         </div>
     </header>
-    <h1>{{ proyecto.nombre_proyecto }}</h1>
-    <p>Creador: {{ proyecto.creador }}</p>
-    <p>Fecha de Creación: {{ proyecto.fecha_creacion }}</p>
-    <p>Descripción: {{ proyecto.descripcion }}</p>
 
-    {% if proyecto.documentacion %}
-    <h3 class="mt-3"><a href="{{ proyecto.documentacion.url }}">Documentación</a></h3>
-    {% endif %}
+    /* Cuerpo */
 
-    {% if proyecto.videos %}
-    
-    <video controls class="mt-3 w-50">
-        <source src="{{ proyecto.videos.url }}" type="video/mp4">
-        El video no se puede reproducir.
-    </video>
-    {% endif %}
-    {% if proyecto.imagenes %}
-    <img src="{{ proyecto.imagenes.url }}" alt="Imagen del proyecto" class="img-fluid">
-{% endif %}
+    <!--|      CONTENEDOR IZQUIERDO       |-->
+    <div class="container-fluid" style="margin-top: 55px;"> <!-- Añadido margen superior de 50px -->
+        <div class="row d-flex align-items-start">
+            <div class="col-md-3">
+                <div class="left-section p-4 rounded">
+                    <a href="{% url 'ver_perfil' request.user.username %}" class="Perfilmenu">
+                        <div class="imagen_user d-flex align-items-center" id="imagenUser">
+                            {% if user_profile.foto_perfil %}
+                            <img src="{{ user_profile.foto_perfil.url }}" alt="Foto de perfil"
+                                class="img-fluid rounded-circle"
+                                style="width: 40px; height: 40px; margin-right: 10px; ">
+                            {% else %}
+                            <img src="{% static 'IMG/Defaultuser.png' %}" class="img-fluid rounded-circle"
+                                style="width: 40px; height: 40px; margin-right: 10px;">
+                            {% endif %}
 
-    <a href="">Editar Proyecto</a>
+                            {% if user.first_name and user.last_name %}
+                            <p class="mb-0 ml-3">{{ user.first_name }} {{ user.last_name }}</p>
+                            {% else %}
+                            <p class="mb-0 ml-3">{{ user.username }}</p>
+                            {% endif %}
+                        </div>
+                    </a>
+
+                    <div class="nav flex-column">
+                        <a href="{% url 'inicio' %}" class="nav-link active"><i class='bx bx-home'></i> Inicio</a>
+                        <a href="#" class="nav-link active"><i class='bx bx-book-bookmark'></i> Universidades</a>
+                        <a href="#" class="nav-link active"><i class='bx bx-group'></i> Sobre Uni-nova</a>
+                        <button id="abrirModal" class="btn1">Publicar Proyecto</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal para publicar proyecto -->
+            <div id="myModal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <span id="cerrarModal">&times;</span>
+                    <h2>Publicar Proyecto</h2>
+                    <form method="POST" action="{% url 'crear_proyecto' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <label for="nombre_proyecto">Nombre del Proyecto:</label><br>
+                        <input type="text" id="nombre_proyecto" name="nombre_proyecto" required><br><br>
+
+                        <label for="descripcion">Descripción:</label><br>
+                        <textarea id="descripcion" name="descripcion" rows="4" cols="50" required></textarea><br><br>
+
+                        <label for="documentacion">Documentación:</label><br>
+                        <input type="file" id="documentacion" name="documentacion"><br><br>
+
+                        <label for="videos">Videos:</label><br>
+                        <input type="file" id="videos" name="videos" multiple accept="video/*"
+                            onchange="previewFiles('videos')"><br>
+                        <div id="videoPreviews"></div><br>
+
+                        <label for="imagenes">Imágenes:</label><br>
+                        <input type="file" id="imagenes" name="imagenes" multiple accept="image/*"
+                            onchange="previewFiles('imagenes')"><br>
+                        <div id="imagePreviews"></div><br>
+
+                        <input type="submit" class="btn1" value="Crear Proyecto">
+                    </form>
+                </div>
+            </div>
+
+
+            <!--|      CONTENEDOR CENTRAL      |-->
+            <main role="main" class="col-md-6">
+                <div class="main-section">
+                    <div class="publicacion card p-3">
+                        <div class="card-body">
+                            <h2><a href="{% url 'ver_proyecto' proyecto.id %}"
+                                    class="card-title">{{proyecto.nombre_proyecto }}</a></h2>
+                            <!-- Muestra la foto de perfil del creador del proyecto -->
+                            <div class="usern mb-3">
+                                <a href="{% url 'ver_perfil' proyecto.creador.username %}">
+                                    {% if proyecto.creador.userprofile.foto_perfil %}
+                                    <img src="{{ proyecto.creador.userprofile.foto_perfil.url }}"
+                                        class="imagen-creador rounded-circle mr-2" alt="creador">
+                                    {% else %}
+                                    <img src="{% static 'IMG/Defaultuser.png' %}"
+                                        class="imagen-creador rounded-circle mr-2" alt="creador">
+                                    {% endif %}
+                                    <div class="nombre-carrera">
+                                        <b>
+                                            <p class="card-text d-inline">{{ proyecto.creador.username }}</p>
+                                            <h6>{{ proyecto.creador.userprofile.carrera.nombre_solo }}</h6>
+                                        </b>
+                                    </div>
+                                </a>
+                            </div>
+                            <p class="card-text">Fecha de Creación: {{ proyecto.fecha_creacion }}</p>
+                            <p class="card-text">{{ proyecto.descripcion }}</p>
+
+                            <div class="media-container mt-3 d-flex">
+                                <div class="media-grid">
+                                    {% if proyecto.imagenes.exists %}
+                                    {% for imagen in proyecto.imagenes.all %}
+                                    <div class="media-item">
+                                        <img src="{{ imagen.imagen.url }}"
+                                            alt="Imagen de {{ proyecto.nombre_proyecto }}" class="img-fluid rounded">
+                                    </div>
+                                    {% endfor %}
+                                    {% endif %}
+
+                                    {% if proyecto.videos.exists %}
+                                    {% for video in proyecto.videos.all %}
+                                    <div class="media-item">
+                                        <video controls class="video w-100 rounded">
+                                            <source src="{{ video.video.url }}" type="video/mp4">
+                                            Tu navegador no soporta el elemento de video.
+                                        </video>
+                                    </div>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            {% if proyecto.documentacion %}
+                            <h3 class="mt-3"><a href="{{ proyecto.documentacion.url }}">Documentación</a></h3>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </main>
+
+
+
+
+            <!--|      CONTENEDOR DERECHO      |-->
+            <div class="col-md-2">
+                <div class="right-section rounded p-3">
+                    <div class="new-container rounded p-3">
+                        <h3>Usuarios Destacados</h3>
+                        <ul>
+                            {% for user in featured_users %}
+                            <li>
+                                {% if user.user.first_name and user.user.last_name %}
+                                <a href="{% url 'ver_perfil' user.user.username %}"><span
+                                        class="username">{{user.user.first_name }} {{ user.user.last_name }}</span></a>
+                                -
+                                {% else %}
+                                <a href="{% url 'ver_perfil' user.user.username %}"><span
+                                        class="username">{{user.user.username }}</span></a> -
+                                {% endif %}
+                                {% if user.universidad %}
+                                <span class="universidad">{{ user.universidad.nombre }}</span>
+                                {% else %}
+                                <span class="no-universidad">Universidad no especificada</span>
+                                {% endif %}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/menu_desplegable.js' %}"></script>
+
 </body>
+
 </html>

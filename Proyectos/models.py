@@ -30,14 +30,14 @@ class ProyectoImagen(models.Model):
     imagen = models.ImageField(upload_to='proyecto_imagenes')
 
     def __str__(self):
-        return f'Imagen de {self.proyecto.nombre_proyecto}'
+        return f'Imagen de {self.proyecto.nombre_proyecto} - {self.proyecto.creador.username}'
 
 class ProyectoVideo(models.Model):
     proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE, related_name='videos')
     video = models.FileField(upload_to=upload_to_proyecto_media)
 
     def __str__(self):
-        return f'Video de {self.proyecto.nombre_proyecto}'
+        return f'Video de {self.proyecto.nombre_proyecto} - {self.proyecto.creador.username}'
 
 
 

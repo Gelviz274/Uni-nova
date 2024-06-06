@@ -1,4 +1,7 @@
 /* custom.css */
+*{
+    top: 0;
+}
 
 body {
     font-family: Arial, sans-serif;
@@ -40,14 +43,131 @@ body {
     font-size: 20px;
 }
 
-.btn-buscar:hover {
-    background-color: #0056b3;
+.imagen_user{
+    padding: 1px;
 }
+.imagen_user img {
+    cursor: pointer;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 .logo img {
     width: 60px;
     height: auto;
 }
 
+
+.menu-desplegable {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 1000;
+}
+
+.menu-desplegable a {
+    display: block;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+.menu-desplegable #CerrarSesion:hover{
+    background-color: red;
+    color: #fff;
+}
+
+.menu-desplegable .Btn-menu:hover {
+    background-color: #ffdba8;
+    color: #000;
+}
+
+
+
+/* BARRA DE BUSQUEDA */
+
+.form-inline .form-control {
+    position: relative;
+    }
+    
+.form-inline .form-control .bx {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #6c757d; /* Color del icono */
+}
+.input-group {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+
+
+
+/*MODAL DE CREAR PROYECTO*/
+
+/* Estilos para el modal */
+.modal {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(68, 66, 66, 0.5); /* Fondo difuminado */
+    z-index: 100;
+}
+
+.modal-content span{
+    text-align: end;
+    font-size: larger;
+}
+/* Estilos para el contenido del modal */
+.modal-content {
+    background-color: #fefefe;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 80%; /* Limita el ancho del contenido */
+    max-height: 80%; /* Limita la altura del contenido */
+    overflow: auto; /* Para permitir desplazamiento si el contenido es demasiado grande */
+    animation-name: zoom;
+    animation-duration: 0.3s;
+}
+
+/* Animación de entrada */
+@keyframes zoom {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+
+
+
+.row.d-flex.align-items-start {
+    display: flex;
+    align-items: flex-start;
+}
+
+/*CUERPO*/
 
 .profile-header {
     background-color: #b2b2b2;

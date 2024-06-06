@@ -26,7 +26,7 @@
     {% endif %}
     
 <!-- Modal -->
-<div id="editarPerfilModal" class="Modal" style="display:none;">
+<div id="editarPerfilModal" class="Modal-edit" style="display:none;">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -55,70 +55,65 @@
     </div>
 </div>
 
+/* HEADER */
 
-    <header class="header">
-        <div class="container-fluid">
-            <div class="row align-items-center">
-                <div class="col-sm-1 d-flex justify-content-center align-items-center" id="logodiv">
-                    <a href="{% url 'inicio' %}" class="logo">
-                        <img src="{% static 'IMG/LOGOUNINOVA.png' %}" alt="Logo" class="img-fluid" id="Logo">
-                    </a>
-                </div>
-                <div class="col-md-8 d-flex align-items-center justify-content-center">
-                    <!-- Barra de búsqueda -->
-                    <form class="form-inline w-100 position-relative">
-                        <div class="input-group w-100">
-                            <input class="search form-control mr-sm-2" type="search" placeholder="Buscar"
-                                aria-label="Buscar">
-                            <div class="input-group-append">
-                                <button class="btn1 btn-buscar" type="submit">
-                                    <i class="bx bx-search"></i> <!-- Icono de lupa -->
-                                </button>
-                            </div>
+<header class="header">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-sm-1 d-flex justify-content-center align-items-center" id="logodiv">
+                <a href="{% url 'inicio' %}" class="logo">
+                    <img src="{% static 'IMG/LOGOUNINOVA.png' %}" alt="Logo" class="img-fluid" id="Logo">
+                </a>
+            </div>
+            <div class="col-md-8 d-flex align-items-center justify-content-center">
+                <!-- Barra de búsqueda -->
+                <form class="form-inline w-100 position-relative">
+                    <div class="input-group w-40">
+                        <input class="search form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
+                        <div class="input-group-append">
+                            <button class="btn1 btn-buscar" type="submit">
+                                <i class="bx bx-search"></i> <!-- Icono de lupa -->
+                            </button>
                         </div>
-                    </form>
-                </div>
-
-
-                <div class="col-md-3 d-flex align-items-center justify-content-center">
-                    <!-- Foto de perfil -->
-                    <div class="usuario d-flex align-items-center position-relative">
-                        <a href="{% url 'ver_perfil' request.user.username %}">
-                            <div class="imagen_user d-flex align-items-center" id="imagenUser">
-                                {% if user_profile.foto_perfil %}
-                                <img src="{{ user_profile.foto_perfil.url }}" alt="Foto de perfil"
-                                    class="img-fluid rounded-circle" style="width: 40px; height: 40px; margin-right: 10px; ">
-                                {% else %}
-                                <img src="{% static 'IMG/Defaultuser.png' %}" class="img-fluid rounded-circle"
-                                    style="width: 40px; height: 40px; margin-right: 10px; ">
-                                {% endif %}
-                                {% if user.first_name %}
-                                <p class="mb-0 ml-3">{{ user.first_name }}</p>
-                                {% else %}
-                                <p class="mb-0 ml-3">{{ user.username }}</p>
-                                {% endif %}
-                            </div>
-                        </a>
-                        <button class="btn btn-link p-0 ml-2" id="dropdownButton">
-                            <i class="bi bi-chevron-down"></i>
-                        </button>
-                        <!-- Menú desplegable -->
-                        <div class="menu-desplegable" id="menuDesplegable">
-                            {% if user.is_authenticated %}
-                            {% if user.is_superuser %}
-                            <a href="{% url 'admin:index' %}" class="Btn-menu">Dashboard <i class='bx bxs-user'></i></a>
-                            {% endif %}
-                            {% endif %}
-                            <a href="#" class="Btn-menu">Configuración <i class='bx bxs-cog'></i></a>
-                            <a href="{% url 'cerrar_sesion' %}" class="btn btn-danger" id="CerrarSesion">Cerrar
-                                sesión</a>
-                        </div>
-                        <i class="bi bi-bell ml-3"></i>
                     </div>
+                </form>
+            </div>
+            <div class="col-md-3 d-flex align-items-center justify-content-center">
+                <!-- Foto de perfil -->
+                <div class="usuario d-flex align-items-center position-relative">
+                    <a href="{% url 'ver_perfil' request.user.username %}">
+                        <div class="imagen_user d-flex align-items-center" id="imagenUser">
+                            {% if authenticated_user_profile and authenticated_user_profile.foto_perfil %}
+                                <img src="{{ authenticated_user_profile.foto_perfil.url }}" alt="Foto de perfil"
+                                     class="img-fluid rounded-circle" style="width: 40px; height: 40px; margin-right: 20px;">
+                            {% else %}
+                                <img src="{% static 'IMG/Defaultuser.png' %}" class="img-fluid rounded-circle"
+                                     style="width: 40px; height: 40px;">
+                            {% endif %}
+                            <p class="mb-0 ml-2">{{ authenticated_user_name }}</p>
+                        </div>
+                    </a>
+                    <button class="btn btn-link p-0 ml-2" id="dropdownButton">
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <!-- Menú desplegable -->
+                    <div class="menu-desplegable" id="menuDesplegable">
+                        {% if user.is_authenticated %}
+                            {% if user.is_superuser %}
+                                <a href="{% url 'admin:index' %}" class="Btn-menu">Dashboard <i class='bx bxs-user'></i></a>
+                            {% endif %}
+                        {% endif %}
+                        <a href="#" class="Btn-menu">Configuración <i class='bx bxs-cog'></i></a>
+                        <a href="{% url 'cerrar_sesion' %}" class="btn btn-danger" id="CerrarSesion">Cerrar sesión</a>
+                    </div>
+                    <i class="bi bi-bell ml-3"></i>
                 </div>
             </div>
         </div>
-    </header>
+    </div>
+</header>
+
+
 
 
     <div class="profile-header mt-5">
@@ -224,16 +219,7 @@
                 </div>
 
                 <!-- Configuración -->
-                {% if user == request.user %}
-                <div class="card">
-                    <div class="card-header">
-                        Configuración
-                    </div>
-                    <div class="card-body text-center">
-                        <a href="{% url 'cerrar_sesion' %}" class="btn btn-danger">Cerrar sesión</a>
-                    </div>
-                </div>
-                {% endif %}
+                
             </div>
         </div>
     </div>

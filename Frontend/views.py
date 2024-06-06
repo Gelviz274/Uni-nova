@@ -86,7 +86,7 @@ def registrarse(request):
                 except Exception as e:
                     messages.error(request, 'Hubo un error al verificar tu cuenta. Por favor, inténtalo de nuevo.')
                     return redirect('registrarse')
-        return render(request, 'registrarse.html')    # Renderizar el formulario de registro
+        return render(request, 'login.html')    # Renderizar el formulario de registro
 
 def activate(request, uidb64, token):
     try:
@@ -289,10 +289,13 @@ def ver_proyecto(request, proyecto_id):
     imagenes = proyecto.imagenes.all()  # Utiliza el related_name 'imagenes'
     videos = proyecto.videos.all()  # Utiliza el related_name 'videos'
     
+    featured_users = get_featured_users()
+
     context = {
         'proyecto': proyecto,
         'imagenes': imagenes,
         'videos': videos,
+        'featured_users': featured_users
     }
     return render(request, 'ver_proyecto.html', context)
 def Prueba (request):
