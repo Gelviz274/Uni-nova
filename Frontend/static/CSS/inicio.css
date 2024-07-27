@@ -109,13 +109,15 @@ body {
 .right-section li{
     list-style: none;
 }
-
+main{
+    margin-left: 55px;
+}
 
 .left-section {
     position: fixed;
     top: 0;
     margin-top: 80px;
-    width: 24%;
+    width: 20%;
 }
 .left-section img{
     width: 150px;

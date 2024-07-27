@@ -79,7 +79,7 @@
     <!--|      CONTENEDOR IZQUIERDO       |-->
     <div class="container-fluid" style="margin-top: 55px;"> <!-- Añadido margen superior de 50px -->
         <div class="row d-flex align-items-start">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="left-section p-4 rounded">
                     <a href="{% url 'ver_perfil' request.user.username %}" class="Perfilmenu">
                         <div class="imagen_user d-flex align-items-center" id="imagenUser">
@@ -143,7 +143,7 @@
 
 
             <!--|      CONTENEDOR CENTRAL      |-->
-            <main role="main" class="col-md-6">
+            <main role="main" class="col-md-7">
                 <div class="main-section">
                     <h1 class="h1 p-2 rounded custom-heading">Proyectos</h1>
 
@@ -165,7 +165,7 @@
                                     {% endif %}
                                     <div class="nombre-carrera">
                                         <b>
-                                            <p class="card-text d-inline">{{ proyecto.creador.username }}</p>
+                                            <p class="card-text d-inline">{{ proyecto.creador.first_name }} {{ proyecto.creador.last_name }} / <span class="text-muted">@{{ proyecto.creador.username }}</span></p>
                                             <h6>{{ proyecto.creador.userprofile.carrera.nombre_solo }}</h6>
                                         </b>
                                     </div>
