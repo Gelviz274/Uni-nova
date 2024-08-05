@@ -1,8 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 *{
     top: 0;
 }
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Lato", sans-serif;
     background-color: #faebd7;
 }
 /*ESTILOS DEL HEADER*/
@@ -89,6 +90,7 @@ body {
     display: block;
     transition: background-color 0.3s ease;
     border-radius: 5px;
+    
 }
 .left-section a:hover {
     background-color: #ddd;
@@ -112,19 +114,22 @@ body {
 main{
     margin-left: 55px;
 }
-
 .left-section {
     position: fixed;
     top: 0;
     margin-top: 80px;
     width: 20%;
+    margin-left: -0.5%;
 }
+/*
 .left-section img{
-    width: 150px;
-    height: 150px;
+    width: 10%;
+    height: 40%;
     border-radius: 50%;
     object-fit: cover;
+    margin-right: 10px;
 }
+*/
 
 .left-section a{
     color: #000;
